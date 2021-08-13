@@ -1,0 +1,237 @@
+@import "utils/variables";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap");
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 2em;
+}
+.link {
+  cursor: pointer;
+}
+.main {
+  min-height: 100vh;
+  padding-bottom: 5em;
+  position: relative;
+  background: $clr-bg;
+  font-family: "Inter", sans-serif;
+  .sortbyContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 10em;
+    padding: 2em 1em 2em 1em;
+    .sortHeader {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      .prompt {
+        color: $clr-highEmpha;
+        font-size: 1.25em;
+        text-align: center;
+        .emphasized {
+          color: $clr-primary;
+        }
+      }
+      .searchContainer {
+        display: flex;
+        align-items: center;
+        background: $clr-bg1;
+        padding: 0.5em 1em;
+        border: 1px solid rgba($clr-primaryRGB, 0.25);
+        border-radius: 0.5em;
+        cursor: pointer;
+        min-width: 20em;
+        .searchIcon {
+          color: $clr-highEmpha;
+          margin-right: 0.75em;
+        }
+        .categories {
+          display: flex;
+          flex-wrap: wrap;
+          .category {
+            color: $clr-primary;
+            font-size: 1em;
+            border: 2px solid rgba($clr-primaryRGB, 0.5);
+            padding: 0.2em 1em;
+            margin: 0em 0.5em 0em 0em;
+            cursor: pointer;
+          }
+        }
+        .trashcan {
+          color: $clr-secondary;
+          z-index: 3;
+        }
+      }
+      .categorySection {
+        background: $clr-bg1;
+        border-radius: 0.5em;
+        .categoryGrid {
+          padding: 1em;
+          display: grid;
+          .sort {
+            display: flex;
+            flex-direction: column;
+            .clear {
+              color: $clr-primary;
+              font-size: 0.85em;
+              margin: 0em 0em 0.5em 0em;
+              cursor: pointer;
+            }
+            .category {
+              color: $clr-primary;
+              border: 2px solid rgba($clr-primaryRGB, 0.5);
+              padding: 0.2em 1em;
+              font-size: 1em;
+              margin: 0em 0em 0.5em 0em;
+              cursor: pointer;
+            }
+            .collegeSearchContainer {
+              display: flex;
+              align-items: center;
+              background: $clr-bg1;
+              color: $clr-highEmpha;
+              border: 1px solid rgba($clr-primaryRGB, 0.25);
+              border-radius: 0.25em;
+              padding: 0.5em 1em;
+              .searchIcon {
+                margin-right: 0.5em;
+              }
+              .collegeInput {
+                background: transparent;
+                outline: none;
+                border: none;
+                color: $clr-highEmpha;
+              }
+              .collegeInput::placeholder {
+                color: $clr-medEmpha;
+                font-family: "Inter", sans-serif;
+              }
+            }
+            .categoryName {
+              margin: 0.5em 0em 0.5em 0em;
+              color: $clr-highEmpha;
+            }
+            .item {
+              margin: 0em 0em 0.5em 0em;
+              padding: 0.25em 0.5em;
+              color: $clr-medEmpha;
+              border: 1px solid $clr-medEmpha;
+              cursor: pointer;
+            }
+            .collegeSearchContainer:hover {
+              border: 1.5px solid rgba($clr-primaryRGB, 0.5);
+            }
+            .collegeContainer {
+              display: flex;
+              flex-direction: column;
+              color: $clr-highEmpha;
+              max-width: 15em;
+              .college {
+                display: flex;
+                font-size: 0.85em;
+                justify-content: space-between;
+                align-items: center;
+                .plus {
+                  color: $clr-primary;
+                  cursor: pointer;
+                  margin-left: 0.75em;
+                }
+              }
+            }
+          }
+        }
+      }
+      .searchBtn {
+        background: $clr-secondary;
+        outline: none;
+        border: none;
+        font-size: 1em;
+        padding: 0.5em 1em;
+        margin-bottom: 1em;
+        border-radius: 0.25em;
+        cursor: pointer;
+      }
+      .instruction {
+        color: $clr-medEmpha;
+        font-size: 0.85em;
+        text-align: center;
+      }
+    }
+  }
+  .gridContainer {
+    padding: 2em 0em;
+    margin-bottom: 5em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: $clr-bg1;
+    .appSection {
+      max-width: 70em;
+      width: 90%;
+      color: $clr-highEmpha;
+      .errorContainer {
+        text-align: center;
+        color: $clr-error;
+        .emoji {
+          font-size: 5em;
+          margin: 0;
+        }
+        .error {
+          font-size: 1.25em;
+        }
+      }
+      .card {
+        background: $clr-bg2;
+        padding: 1em;
+        .header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          .unfavIcon {
+            color: $clr-medEmpha;
+            cursor: pointer;
+          }
+          .viewContainer {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            .viewText {
+              color: $clr-secondary;
+              margin: 0;
+              padding-top: 5px;
+              font-size: 0.85em;
+            }
+          }
+        }
+        .bottomContainer {
+          display: flex;
+          justify-content: space-between;
+          font-size: 0.85em;
+          color: $clr-medEmpha;
+          .visit {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}
+@media (min-width: 500px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .categoryGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2em;
+  }
+}
+@media (min-width: 950px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

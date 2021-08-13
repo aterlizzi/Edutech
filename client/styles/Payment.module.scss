@@ -1,0 +1,68 @@
+@import "utils/variables";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap");
+
+.grid {
+  display: grid;
+  gap: 2em;
+}
+.loader {
+  margin: 0 0 2em;
+  height: 100px;
+  width: 20%;
+  text-align: center;
+  padding: 1em;
+  margin: 0 auto 1em;
+  display: inline-block;
+  vertical-align: top;
+  position: absolute;
+  top: -37.5%;
+  left: 45%;
+  transform: translateX(-50%);
+}
+.svg .path,
+.svg rect {
+  fill: black;
+}
+.main {
+  background: $clr-bg;
+  height: 100%;
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+  color: $clr-highEmpha;
+  .wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .gridSection {
+      max-width: 60em;
+      width: 90%;
+      margin: 5em 0em;
+      .card {
+        background: $clr-bg1;
+        padding: 2em;
+        .desc {
+          color: $clr-medEmpha;
+          line-height: 25px;
+        }
+        .btn {
+          background: $clr-secondary;
+          outline: none;
+          border: none;
+          padding: 0.5em 1em;
+          font-size: 1em;
+          margin-top: 1em;
+          border-radius: 0.25em;
+          cursor: pointer;
+          position: relative;
+          width: 200px;
+          height: 40px;
+        }
+      }
+    }
+  }
+}
+@media (min-width: 680px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

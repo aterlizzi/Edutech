@@ -1,0 +1,614 @@
+@import "utils/variables";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap");
+
+.main {
+  font-family: "Inter", sans-serif;
+  min-height: 100vh;
+  color: $clr-highEmpha;
+  background: $clr-bg;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  padding: 1em;
+  .codeContainer {
+    max-width: 30em;
+    min-width: 20em;
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(22, 22, 22, 0.8);
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
+    border-radius: 0.5em;
+    .codeHead {
+      text-align: center;
+      .title {
+        margin: 0;
+        color: $clr-primary;
+      }
+    }
+    .content {
+      .inputContainer {
+        display: flex;
+        align-items: center;
+        background: $clr-bg;
+        padding: 0em 1em;
+        border: 1px solid rgba($clr-primaryRGB, 0.25);
+        &:hover {
+          border: 1px solid rgba($clr-primaryRGB, 0.5);
+        }
+        .icon {
+          margin: 0em 0.5em 0em 0em;
+          color: $clr-primary;
+          font-size: 1.25em;
+        }
+        .input {
+          background: transparent;
+          width: 100%;
+          padding: 1em 0.5em;
+          outline: none;
+          border: none;
+          color: $clr-highEmpha;
+          &::placeholder {
+            color: $clr-medEmpha;
+          }
+        }
+      }
+      .error {
+        text-align: center;
+        color: $clr-error;
+      }
+      .codeBtn {
+        background: $clr-primary;
+        font-size: 1em;
+        cursor: pointer;
+        outline: none;
+        border: none;
+        border-radius: 0.5em;
+        padding: 0.5em 1em;
+        width: 100%;
+        margin-top: 1em;
+      }
+    }
+  }
+  .wrapper {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    background: rgba(black, 0.8);
+    cursor: pointer;
+  }
+  .referralContainer {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    .copyContainer {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.5em;
+      .referral {
+        margin: 0em 0.5em 0em 0em;
+      }
+      .copy {
+        outline: none;
+        border: none;
+        background: transparent;
+        color: $clr-secondary;
+        font-size: 1em;
+        font-family: "Inter", sans-serif;
+        margin: 0em 0.5em 0em 0em;
+        font-weight: 600;
+        cursor: pointer;
+        width: 20%;
+      }
+      .copied {
+        margin: 0;
+        font-size: 0.85em;
+        color: $clr-secondary;
+      }
+    }
+    .learnMore {
+      color: $clr-primary;
+      cursor: pointer;
+      margin: 0;
+    }
+  }
+  .circle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    width: 60px;
+    background: $clr-bg2;
+    .icon {
+      color: $clr-primary;
+      font-size: 1.4em;
+    }
+  }
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    .faqBelow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 1em;
+      .faq {
+        margin: 0;
+      }
+      .icon {
+        color: $clr-secondary;
+        font-size: 1.25em;
+        margin-top: 0.5em;
+      }
+    }
+    .header {
+      .title {
+        font-size: 2.25em;
+        text-align: center;
+      }
+      .tagLine {
+        font-size: 1.4em;
+        max-width: 40em;
+        text-align: center;
+        color: $clr-medEmpha;
+        line-height: 35px;
+        .special {
+          color: $clr-primary;
+        }
+      }
+    }
+    .cardSection {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr 1fr;
+      align-items: center;
+      .mainCard {
+        background: rgb(187, 134, 252);
+        padding: 1em;
+        background: $clr-bg4;
+        height: 500px;
+        border-radius: 0.5em;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        .top {
+          .cardHead {
+            margin-bottom: 1em;
+            .cardTitle {
+              margin: 0;
+              text-align: center;
+            }
+            .recommended {
+              color: $clr-secondary;
+              text-align: center;
+              margin: 0.5em 0em 0em 0em;
+            }
+          }
+          .priceContainer {
+            display: flex;
+            flex-direction: column;
+            .off {
+              color: $clr-secondary;
+              text-align: center;
+              margin: 0;
+              font-weight: 600;
+            }
+            .pricing {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              .price {
+                font-size: 1em;
+                margin: 0;
+              }
+              .perMonth {
+                font-size: 0.85em;
+                margin: 0;
+                color: $clr-medEmpha;
+              }
+            }
+          }
+          .features {
+            .featureContainer {
+              margin-bottom: 1em;
+              display: flex;
+              align-items: center;
+              &:first-child {
+                margin-top: 2em;
+              }
+              .icon {
+                margin-right: 0.5em;
+                color: $clr-secondary;
+                font-size: 1.125em;
+              }
+              .feature {
+                margin: 0;
+                .special {
+                  color: $clr-secondary;
+                }
+              }
+            }
+          }
+        }
+        .bottom {
+          width: 100%;
+          .refText {
+            margin: 1em 0em 0em 0em;
+            cursor: pointer;
+            font-size: 0.85em;
+            text-align: center;
+          }
+          .btn {
+            padding: 0.5em;
+            cursor: pointer;
+            font-size: 1.25em;
+            font-family: "Inter", sans-serif;
+            background: $clr-secondary;
+            outline: none;
+            border: none;
+            font-weight: 600;
+            width: 100%;
+          }
+        }
+      }
+      .card1 {
+        border-top-left-radius: 0.5em;
+        justify-self: flex-end;
+      }
+      .card3 {
+        border-top-right-radius: 0.5em;
+      }
+      .card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 400px;
+        background: $clr-bg2;
+        max-width: 250px;
+        width: 100%;
+        padding: 1em;
+        position: relative;
+        justify-content: space-between;
+        .top {
+          .cardHead {
+            margin-bottom: 1em;
+            .cardTitle {
+              margin: 0;
+              text-align: center;
+            }
+          }
+          .priceContainer {
+            display: flex;
+            flex-direction: column;
+            .off {
+              color: $clr-primary;
+              text-align: center;
+              margin: 0;
+              font-weight: 600;
+            }
+            .pricing {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              .price {
+                font-size: 1em;
+                margin: 0;
+              }
+              .perMonth {
+                font-size: 0.85em;
+                margin: 0;
+                color: $clr-medEmpha;
+              }
+            }
+          }
+          .features {
+            .featureContainer {
+              margin-bottom: 1em;
+              display: flex;
+              align-items: center;
+              .icon {
+                margin-right: 0.5em;
+                color: $clr-primary;
+                font-size: 1.125em;
+              }
+              &:first-child {
+                margin-top: 2em;
+              }
+              .feature {
+                margin: 0;
+                font-size: 0.85em;
+                .special {
+                  color: $clr-primary;
+                }
+              }
+            }
+          }
+        }
+        .bottom {
+          width: 100%;
+          .refText {
+            margin: 1em 0em 0em 0em;
+            cursor: pointer;
+            font-size: 0.85em;
+            text-align: center;
+          }
+          .selected {
+            background: $clr-bg;
+            color: $clr-highEmpha;
+            outline: none;
+            border: 1px solid rgba($clr-primaryRGB, 0.5);
+            font-size: 1em;
+            font-family: "Inter", sans-serif;
+            font-weight: 500;
+            padding: 0.5em 1em;
+            width: 100%;
+          }
+          .btn {
+            background: $clr-primary;
+            outline: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+            font-family: "Inter", sans-serif;
+            font-weight: 500;
+            padding: 0.5em 1em;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+  .faqQuestions {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2em;
+    .faqHead {
+      margin-bottom: 1em;
+      margin-top: 1em;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      align-items: stretch;
+      justify-items: center;
+      gap: 3em;
+      .faqCard {
+        max-width: 25em;
+        width: 90%;
+        background: $clr-bg1;
+        padding: 1em;
+        border-radius: 0.5em;
+        .cardHeader {
+          position: relative;
+          padding-bottom: 1em;
+          border-bottom: 2px solid $clr-bg5;
+          .circleQuestion {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: $clr-bg3;
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            position: absolute;
+            left: 0;
+            .icon {
+              font-size: 1.25em;
+              color: $clr-primary;
+              margin: 0;
+              padding: 0;
+            }
+          }
+          .cardTitle {
+            margin: 0em 0em 0em 3em;
+          }
+        }
+        .answerContainer {
+          .answer {
+            color: $clr-medEmpha;
+            line-height: 25px;
+            .special {
+              color: $clr-primary;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
+    .contactUs {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      .contactHeader {
+        .title {
+          margin: 2em 0em 2em 0em;
+          text-align: center;
+        }
+      }
+      .reachContainer {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        justify-items: center;
+        align-items: stretch;
+        .method {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          max-width: 20em;
+          width: 90%;
+          &:first-child {
+            margin-right: 3em;
+          }
+          .icon {
+            font-size: 4em;
+            margin: 0em 0em 0.5em 0em;
+            color: $clr-primary;
+          }
+          .methodTitle {
+            margin: 0;
+          }
+          .desc {
+            color: $clr-medEmpha;
+            text-align: center;
+          }
+          .form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            .inputContainer {
+              background: $clr-bg1;
+              display: flex;
+              padding: 0em 1em;
+              margin-bottom: 1em;
+              align-items: center;
+              border: 1px solid rgba($clr-primaryRGB, 0.25);
+              &:hover {
+                border: 1px solid rgba($clr-primaryRGB, 0.5);
+              }
+              .icon {
+                font-size: 1.25em;
+                margin: 0;
+              }
+              .input {
+                align-self: center;
+                background: none;
+                padding: 1em 1em;
+                width: 100%;
+                outline: none;
+                border: none;
+                color: $clr-highEmpha;
+                &::placeholder {
+                  color: $clr-medEmpha;
+                }
+              }
+            }
+            .emailBtn {
+              background: $clr-primary;
+              padding: 0.5em 1em;
+              font-size: 1em;
+              outline: none;
+              border: none;
+              cursor: pointer;
+              border-radius: 0.5em;
+            }
+            .sending {
+              color: $clr-primary;
+            }
+            .success {
+              color: $clr-secondary;
+              text-align: center;
+            }
+          }
+          .contactBtn {
+            background: $clr-primary;
+            padding: 0.5em 1em;
+            font-size: 1em;
+            outline: none;
+            border: none;
+            cursor: pointer;
+            border-radius: 0.5em;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 620px) {
+  .main {
+    .referralContainer {
+      .referral {
+        font-size: 1em;
+      }
+      .learnMore {
+        font-size: 0.85em;
+      }
+    }
+    .container {
+      .header {
+        margin-top: 5em;
+        max-width: 30em;
+        .title {
+          font-size: 1.8em;
+        }
+        .tagLine {
+          font-size: 1.2em;
+        }
+      }
+      .cardSection {
+        grid-template-columns: 1fr;
+        gap: 1em;
+        justify-items: center;
+        .card1 {
+          justify-self: center;
+        }
+        .card {
+          border-radius: 0.5em;
+        }
+      }
+    }
+  }
+}
+@media (max-width: 1100px) {
+  .main {
+    .codeContainer {
+      top: 5%;
+    }
+    .container {
+      .header {
+        margin-top: 3em;
+      }
+    }
+    .faqQuestions {
+      .grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1em;
+      }
+    }
+  }
+}
+@media (max-width: 680px) {
+  .main {
+    .faqQuestions {
+      .faqHead {
+        .title {
+          text-align: center;
+        }
+      }
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      .contactUs {
+        .reachContainer {
+          grid-template-columns: 1fr;
+          justify-items: center;
+          align-items: center;
+        }
+      }
+    }
+  }
+}

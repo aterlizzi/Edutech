@@ -1,0 +1,242 @@
+@import "utils/variables";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap");
+
+$blue: #bb86fc;
+$white: #fff;
+$curve: cubic-bezier(0.42, 0, 0.275, 1.155);
+$time: 1.4s;
+
+.errorContainer {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: $clr-bg;
+  text-align: center;
+  padding: 2em;
+  .errEmoji {
+    font-size: 4em;
+    color: $clr-error;
+  }
+  .errMsg {
+    color: $clr-error;
+  }
+  .errBtn {
+    background: $clr-error;
+    outline: none;
+    border: none;
+    border-radius: 0.5em;
+    padding: 0.5em 2em;
+    font-size: 1em;
+    margin-bottom: 1em;
+    cursor: pointer;
+  }
+}
+
+.main {
+  min-height: 100vh;
+  background: $clr-bg;
+  color: $clr-highEmpha;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Inter", sans-serif;
+  .card {
+    background: $clr-bg2;
+    max-width: 20em;
+    width: 90%;
+    height: 37.5em;
+    text-align: center;
+    padding: 1em;
+    .contentContainer {
+      .header {
+        padding: 1em;
+        .subText {
+          color: $clr-medEmpha;
+          line-height: 25px;
+          .email {
+            color: $clr-primary;
+          }
+        }
+      }
+      .appBtn {
+        background: $clr-secondary;
+        outline: none;
+        border: none;
+        font-size: 1em;
+        border-radius: 0.5em;
+        padding: 0.5em 2em;
+      }
+    }
+  }
+}
+
+@mixin size($size) {
+  width: $size;
+  height: $size;
+}
+
+.successContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+
+.confetti {
+  position: absolute;
+  animation: grow $time $curve both;
+
+  &:nth-child(1) {
+    @include size(12px);
+    left: 12px;
+    top: 16px;
+  }
+
+  &:nth-child(2) {
+    @include size(18px);
+    left: 168px;
+    top: 84px;
+  }
+
+  &:nth-child(3) {
+    @include size(10px);
+    left: 32px;
+    top: 162px;
+  }
+
+  &:nth-child(4) {
+    @include size(20px);
+    left: 82px;
+    top: -12px;
+  }
+
+  &:nth-child(5) {
+    @include size(14px);
+    left: 125px;
+    top: 162px;
+  }
+
+  &:nth-child(6) {
+    @include size(10px);
+    left: 16px;
+    top: 16px;
+  }
+
+  @for $i from 1 through 6 {
+    &:nth-child(#{$i}) {
+      animation-delay: $i * ($time/2);
+    }
+  }
+}
+
+.checkmark {
+  position: relative;
+  padding: 30px;
+  animation: checkmark 15.6s $curve both;
+}
+
+.checkmark__check {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 10;
+  transform: translate3d(-50%, -50%, 0);
+  fill: $white;
+}
+
+.checkmark__back {
+  animation: rotate 35s linear both infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes grow {
+  0%,
+  100% {
+    transform: scale(0);
+  }
+
+  50% {
+    transform: scale(1);
+  }
+}
+
+@keyframes checkmark {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  10%,
+  50%,
+  90% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+$offset: 187;
+$duration: 1.4s;
+
+.spinner {
+  animation: rotator $duration linear infinite;
+}
+
+@keyframes rotator {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(270deg);
+  }
+}
+
+.path {
+  stroke-dasharray: $offset;
+  stroke-dashoffset: 0;
+  transform-origin: center;
+  animation: dash $duration ease-in-out infinite,
+    colors ($duration * 4) ease-in-out infinite;
+}
+
+@keyframes colors {
+  0% {
+    stroke: #4285f4;
+  }
+  25% {
+    stroke: #de3e35;
+  }
+  50% {
+    stroke: #f7c223;
+  }
+  75% {
+    stroke: #1b9a59;
+  }
+  100% {
+    stroke: #4285f4;
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dashoffset: $offset;
+  }
+  50% {
+    stroke-dashoffset: $offset/4;
+    transform: rotate(135deg);
+  }
+  100% {
+    stroke-dashoffset: $offset;
+    transform: rotate(450deg);
+  }
+}

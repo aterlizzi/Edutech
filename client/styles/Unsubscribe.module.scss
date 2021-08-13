@@ -1,0 +1,173 @@
+@import "utils/variables";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap");
+
+.main {
+  min-height: 100vh;
+  background: $clr-bg;
+  font-family: "Inter", sans-serif;
+  color: $clr-highEmpha;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  .circle {
+    height: 60px;
+    width: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: $clr-bg2;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border-radius: 50%;
+    .icon {
+      font-size: 1.4em;
+      color: $clr-primary;
+    }
+  }
+  .card {
+    background: $clr-bg1;
+    padding: 1.5em;
+    width: 90%;
+    max-width: 22.5em;
+    border-radius: 0.5em;
+    .head {
+      .title {
+        margin: 0;
+      }
+      .desc {
+        font-size: 0.85em;
+        color: $clr-medEmpha;
+        line-height: 25px;
+      }
+    }
+    .bodyContent {
+      .form {
+        display: flex;
+        flex-direction: column;
+        .label {
+          margin-bottom: 0.5em;
+          color: $clr-primary;
+        }
+        .textarea {
+          resize: none;
+          height: 100px;
+          background: $clr-bg;
+          outline: none;
+          border: 1px solid rgba($clr-primaryRGB, 0.25);
+          padding: 1em;
+          font-family: "Inter", sans-serif;
+          color: $clr-highEmpha;
+          &::placeholder {
+            font-family: "Inter", sans-serif;
+            color: $clr-medEmpha;
+          }
+          &:hover {
+            border: 1px solid rgba($clr-primaryRGB, 0.5);
+          }
+        }
+        .btn {
+          background: $clr-primary;
+          font-size: 1em;
+          padding: 0.5em 1em;
+          margin-top: 1em;
+          outline: none;
+          border: none;
+          cursor: pointer;
+          border-radius: 0.25em;
+        }
+      }
+    }
+  }
+}
+
+.ldsRoller {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+  align-self: center;
+  margin-top: 1em;
+}
+.ldsRoller div {
+  animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  transform-origin: 40px 40px;
+}
+.ldsRoller div:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: $clr-secondary;
+  margin: -4px 0 0 -4px;
+}
+.ldsRoller div:nth-child(1) {
+  animation-delay: -0.036s;
+}
+.ldsRoller div:nth-child(1):after {
+  top: 63px;
+  left: 63px;
+}
+.ldsRoller div:nth-child(2) {
+  animation-delay: -0.072s;
+}
+.ldsRoller div:nth-child(2):after {
+  top: 68px;
+  left: 56px;
+}
+.ldsRoller div:nth-child(3) {
+  animation-delay: -0.108s;
+}
+.ldsRoller div:nth-child(3):after {
+  top: 71px;
+  left: 48px;
+}
+.ldsRoller div:nth-child(4) {
+  animation-delay: -0.144s;
+}
+.ldsRoller div:nth-child(4):after {
+  top: 72px;
+  left: 40px;
+}
+.ldsRoller div:nth-child(5) {
+  animation-delay: -0.18s;
+}
+.ldsRoller div:nth-child(5):after {
+  top: 71px;
+  left: 32px;
+}
+.ldsRoller div:nth-child(6) {
+  animation-delay: -0.216s;
+}
+.ldsRoller div:nth-child(6):after {
+  top: 68px;
+  left: 24px;
+}
+.ldsRoller div:nth-child(7) {
+  animation-delay: -0.252s;
+}
+.ldsRoller div:nth-child(7):after {
+  top: 63px;
+  left: 17px;
+}
+.ldsRoller div:nth-child(8) {
+  animation-delay: -0.288s;
+}
+.ldsRoller div:nth-child(8):after {
+  top: 56px;
+  left: 12px;
+}
+@keyframes lds-roller {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,383 @@
+@import "utils/variables";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap");
+
+.nav {
+  background: $clr-bg1;
+  color: $clr-highEmpha;
+  font-family: "Inter", sans-serif;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em 4em;
+  max-width: 100%;
+  .burger {
+    display: none;
+    position: relative;
+    z-index: 50;
+  }
+  .logoContainer {
+    width: 100%;
+    max-width: 100px;
+    cursor: pointer;
+  }
+  .linkContainer {
+    max-width: 40em;
+    width: 90%;
+    .list {
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+  .accountContainer {
+    position: relative;
+    .username {
+      display: flex;
+      margin-left: 5em;
+      align-items: center;
+      .userIcon {
+        margin-left: 0.5em;
+        color: $clr-medEmpha;
+      }
+    }
+    .signinContainer {
+      background: $clr-bg2;
+      padding: 0.5em 1.125em;
+      border-radius: 5em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 5em;
+      .accountText {
+        padding: 0;
+        margin: 0;
+      }
+      .chevron {
+        transition: transform 200ms ease-in-out;
+      }
+      .chevStick {
+        width: 10px;
+        height: 2px;
+        position: absolute;
+        background: $clr-highEmpha;
+        top: 50%;
+        right: 13px;
+        opacity: 0;
+        transition: opacity 200ms ease-in-out;
+      }
+      .chevron::before {
+        border-style: solid;
+        border-width: 0.15em 0.15em 0 0;
+        content: "";
+        display: inline-block;
+        height: 0.35em;
+        left: 0.15em;
+        position: relative;
+        top: 0.45em;
+        transform: rotate(-45deg);
+        vertical-align: top;
+        width: 0.35em;
+        margin-left: 0.55em;
+      }
+      .chevron.right:before {
+        left: 0;
+        transform: rotate(45deg);
+      }
+    }
+    .signinContainer:hover {
+      background: $clr-bg4;
+    }
+    .signinContainer:hover .chevron {
+      transform: translateX(40%);
+    }
+    .signinContainer:hover .chevStick {
+      opacity: 1;
+    }
+    .dropdown {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      left: 22.5%;
+      top: 90%;
+      position: absolute;
+      transform: scale(0);
+      opacity: 0;
+      transition: all 150ms ease-in-out;
+      transform-origin: top;
+      border-radius: 0.5em;
+      padding-bottom: 1em;
+
+      .arrow {
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-bottom: 10px solid #1e1e1e;
+      }
+      .linkContainer {
+        background: #1e1e1e;
+        width: 100%;
+        display: block;
+        align-items: center;
+        border-radius: 0.5em;
+        color: $clr-highEmpha;
+        .link {
+          text-align: left;
+          padding: 1em 1em;
+          white-space: nowrap;
+          margin: 0;
+          width: 100%;
+          border-radius: 0.5em;
+          cursor: pointer;
+          .icon {
+            margin-right: 0.5em;
+          }
+        }
+        .link:hover {
+          background: $clr-primary;
+        }
+      }
+    }
+    .accountText:hover + .dropdown {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  .accountContainer:hover .dropdown {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.aside {
+  display: none;
+  color: $clr-highEmpha;
+  font-family: "Inter", sans-serif;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  inset: 0;
+  overflow-x: hidden;
+  pointer-events: none;
+  .mobileContainer {
+    position: absolute;
+    z-index: 4;
+    top: 5em;
+    right: 0;
+    width: 70%;
+    background: #181818;
+    padding: 2em;
+    transform: translateX(100%);
+    transition: transform 200ms ease-in;
+    border-left: 1px solid $clr-bg2;
+    border-bottom: 1px solid $clr-bg2;
+    border-bottom-left-radius: 0.5em;
+    pointer-events: all;
+    .header {
+      display: flex;
+      justify-content: center;
+      border-bottom: 1px solid $clr-bg3;
+      .logo {
+        max-width: 125px;
+        margin-bottom: 1em;
+      }
+    }
+    .menu {
+      border-bottom: 1px solid $clr-bg3;
+      .sectionLabel {
+        text-transform: uppercase;
+        font-size: 0.5em;
+        color: $clr-medEmpha;
+        letter-spacing: 1.25px;
+        margin-top: 2.3em;
+      }
+      .mList {
+        margin: 0;
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        align-items: stretch;
+        z-index: 4;
+        .iconContainer {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          .icon {
+            margin-bottom: 1em;
+            color: $clr-primary;
+          }
+          .icon:first-child {
+            margin-top: 1em;
+          }
+        }
+        .linkContainer {
+          display: flex;
+          flex-direction: column;
+          .listItemContainer {
+            margin-bottom: 1em;
+            cursor: pointer;
+            position: relative;
+            z-index: 50;
+          }
+          .listItemContainer:first-child {
+            margin-top: 1em;
+          }
+        }
+      }
+    }
+    .user {
+      border-bottom: 1px solid $clr-bg3;
+
+      .sectionLabel {
+        text-transform: uppercase;
+        font-size: 0.5em;
+        color: $clr-medEmpha;
+        letter-spacing: 1.25px;
+        margin-top: 2.3em;
+      }
+      .mList {
+        margin: 0;
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        align-items: stretch;
+        position: relative;
+        .iconContainer {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          .icon {
+            margin-bottom: 0.9em;
+            color: $clr-primary;
+          }
+          .icon:first-child {
+            margin-top: 1em;
+          }
+          .icon:last-child {
+            margin-bottom: 1.1em;
+          }
+        }
+        .linkContainer {
+          display: flex;
+          flex-direction: column;
+          .listItemContainer {
+            margin-bottom: 1em;
+            cursor: pointer;
+          }
+          .listItemContainer:first-child {
+            margin-top: 1em;
+          }
+          .listItemContainer:last-child {
+            margin-bottom: 1em;
+          }
+        }
+        .logoutBtn {
+          position: absolute;
+          bottom: -1em;
+          left: 50%;
+          transform: translateX(-50%);
+          background: $clr-secondary;
+          outline: none;
+          border: none;
+          font-size: 1em;
+          padding: 0.5em 1em;
+          border-radius: 0.5em;
+          .logoutIcon {
+            margin-right: 0.5em;
+          }
+        }
+      }
+    }
+    .account {
+      padding-top: 2em;
+      .accountContainer {
+        display: flex;
+        align-items: center;
+        .circle {
+          width: 50px;
+          height: 50px;
+          margin-right: 1em;
+          border-radius: 50%;
+          background: $clr-bg2;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .userIcon {
+            color: $clr-primary;
+          }
+        }
+        .userInfo {
+          display: flex;
+          flex-direction: column;
+          .username {
+            margin: 0 0 0.25em 0;
+          }
+          .info {
+            margin: 0;
+            font-size: 0.7em;
+            color: $clr-medEmpha;
+          }
+        }
+      }
+      .loginContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .loginBtn {
+          font-size: 1em;
+          padding: 0.5em 1em;
+          background: $clr-secondary;
+          outline: none;
+          border: none;
+          border-radius: 0.3em;
+          cursor: pointer;
+          .loginIcon {
+            margin-right: 0.5em;
+          }
+        }
+      }
+    }
+  }
+  .active {
+    transform: translateX(0%);
+  }
+}
+@media (min-width: 450px) {
+  .aside {
+    .mobileContainer {
+      width: 50%;
+    }
+  }
+}
+@media (min-width: 600px) {
+  .aside {
+    .mobileContainer {
+      width: 40%;
+    }
+  }
+}
+@media (min-width: 720px) {
+  .aside {
+    .mobileContainer {
+      width: 35%;
+    }
+  }
+}
+@media (max-width: 860px) {
+  .nav {
+    .burger {
+      display: initial;
+    }
+    .linkContainer {
+      display: none;
+    }
+    .accountContainer {
+      display: none;
+    }
+    .logoContainer {
+      visibility: hidden;
+    }
+  }
+  .aside {
+    display: initial;
+  }
+}
