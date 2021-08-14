@@ -1,8 +1,9 @@
-import styles from "../../styles/Register.module.scss";
+import styles from "../../../../styles/Register.module.scss";
 import Image from "next/image";
 import Link from "next/link";
-import LogoNoText from "../../public/logoWithoutText.png";
-import registerPic from "../../public/register-bg.jpg";
+import LogoNoText from "../../../../public/logoWithoutText.png";
+import registerPic from "../../../../public/register-bg.jpg";
+import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEnvelope,
@@ -26,8 +27,14 @@ const Resend = `
     sendConfirmation(email: $email)
   }
 `;
+const FindSession = `
+  mutation($token: String!) {
+      findSession(token: $token)
+  }
+`;
 
 function register() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
@@ -36,9 +43,12 @@ function register() {
   const [passwordErr, setPasswordErr] = useState([]);
   const [success, setSuccess] = useState(false);
   const [sendSuccess, setSendSuccess] = useState(false);
+
   const [registerResult, register] = useMutation(Register);
   const [resendResult, resendConfirm] = useMutation(Resend);
+  const [findSessionResult, findSession] = useMutation(FindSession);
 
+  console.log(router.query);
   const handleSubmit = (e: any) => {
     e.preventDefault();
     const variables = {
@@ -71,6 +81,19 @@ function register() {
         setSuccess(true);
       }
     });
+    const token = router.query.token;
+    const newVariables = {
+      token,
+    };
+    setTimeout(() => {
+      findSession(newVariables).then((result) => {
+        if (result.data.findSession) {
+          router.push(result.data.findSession);
+        } else {
+          router.push("/");
+        }
+      });
+    }, 1000 * 10);
   };
 
   const handleReconfirm = () => {
@@ -247,14 +270,6 @@ function register() {
                 ) : null}
               </div>
             </form>
-            <div className={styles.loginBox}>
-              <p>
-                Already a member?{" "}
-                <Link href="/user/login">
-                  <span className={styles.loginText}>Login</span>
-                </Link>
-              </p>
-            </div>
           </section>
         ) : (
           <section className={styles.rightContainer}>
@@ -264,11 +279,9 @@ function register() {
               </h3>
               <p className={styles.successSubmsg}>
                 A confirmation email has been sent to your email. You must
-                confirm your account before you can login.
+                confirm your account before you can login. For now, we will
+                redirect you to your payment page.
               </p>
-              <button className={styles.returnBtn}>
-                <Link href="/">Return to home.</Link>
-              </button>
               {resendResult.fetching ? (
                 <h3 className={styles.resending}>Sending...</h3>
               ) : (
@@ -295,6 +308,7 @@ function register() {
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   let isAuthenticated = false;
+  console.log(req);
   if (req.cookies.hasOwnProperty("qid")) {
     isAuthenticated = true;
   }

@@ -594,7 +594,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   if (!req.cookies.hasOwnProperty("sid")) {
     return {
       redirect: {
-        destination: "/applications/payments",
+        destination: "/applications/pricing",
         permanent: false,
       },
     };

@@ -17,8 +17,10 @@ import cors from "cors";
 import { graphqlUploadExpress } from "graphql-upload";
 import { Ideas } from "./entity/Ideas";
 import { SavedIdeas } from "./entity/SavedIdeas";
+const orderId = require("order-id")(process.env.ORDER_ID_SECRET);
 const webhookSecret = process.env.STRIPE_ENDPOINT_SECRET;
 const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST_KEY);
+const bodyParser = require("body-parser");
 // fixes typescript issue with assigning parameters to req.session object.
 declare module "express-session" {
   interface SessionData {
@@ -72,24 +74,80 @@ const main = async () => {
       cookie: {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        maxAge: 1000 * 60 * 60 * 24 * 7 * 365, // 7 years
+        maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
       },
     } as any)
   );
   app.post(
     "/webhook",
-    express.json({ type: "application/json" }),
-    (req, res) => {
+    bodyParser.raw({ type: "application/json" }),
+    async (req, res) => {
       const sig = req.headers["stripe-signature"];
       let event;
-
       try {
         event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
       } catch (err) {
         res.status(400).send(`Improper webhook signature.`);
       }
-
       switch (event.type) {
+        case "checkout.session.completed":
+          console.log(event);
+          const checkoutId = event.data.object.id;
+          const userId = event.data.object.client_reference_id;
+          const order_id = orderId.generate();
+          if (!userId) break;
+          const user = await UserData.findOne({ where: { id: userId } });
+          if (!user) break;
+          user.custKey = event.data.object.customer;
+          user.subscriber = true;
+          user.orderId = order_id;
+          user.subKey = event.data.object.subscription;
+          const line_items = await stripe.checkout.sessions.listLineItems(
+            checkoutId
+          );
+          const price_id = line_items.data[0].price.id;
+          switch (price_id) {
+            case process.env.STRIPE_SECRET_PUBLICUNIVERSITY_PRICE_KEY:
+              user.tier = "Public";
+              break;
+            case process.env.STRIPE_SECRET_PUBLICUNIVERSITY_DISCOUNT_PRICE_KEY:
+              user.tier = "Public";
+              break;
+            case process.env.STRIPE_SECRET_IVYLEAGUE_PRICE_KEY:
+              user.tier = "Ivy";
+              break;
+            case process.env.STRIPE_SECRET_IVYLEAGUE_DISCOUNT_PRICE_KEY:
+              user.tier = "Ivy";
+              break;
+            default:
+              break;
+          }
+          console.log("run");
+          await user.save();
+          break;
+        case "invoice.paid":
+          const invoiceCustkey = event.data.object.customer;
+          const invoiceCust = await UserData.findOne({
+            where: { custKey: invoiceCustkey },
+          });
+          if (!invoiceCust) break;
+          const periodEnd = event.data.object.period_end;
+          invoiceCust.current_period_end = parseInt(periodEnd);
+          invoiceCust.totalIdeasRequested = 0;
+          await invoiceCust.save();
+          break;
+        case "customer.subscription.deleted":
+          const customer = event.data.object.customer;
+          const subEndUser = await UserData.findOne({
+            where: { custKey: customer },
+          });
+          if (!subEndUser) break;
+          subEndUser.subscriber = false;
+          subEndUser.tier = "Free";
+          subEndUser.subKey = "";
+          subEndUser.current_period_end = Date.now();
+          await subEndUser.save();
+          break;
         default:
           console.log(`Unhandled event type ${event.type}`);
       }

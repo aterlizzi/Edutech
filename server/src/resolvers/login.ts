@@ -31,7 +31,7 @@ export class LoginResolver {
       secure: process.env.NODE_ENV === "production",
       maxAge: 1000 * 60 * 60 * 24 * 7 * 365, // 7 years
     });
-    if (user.subscriber) {
+    if (user.subscriber && user.current_period_end - Date.now() > 0) {
       ctx.res.cookie("sid", v4(), {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",

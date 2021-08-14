@@ -14,6 +14,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useRef, useState } from "react";
 import { useMutation, useQuery } from "urql";
 import Layout from "../../components/layout";
@@ -39,11 +40,16 @@ const VerifyCode = `
   mutation($code: String!) {
     verifyCode(code: $code)
   }
-
+`;
+const GenerateStripeSession = `
+  mutation($referralCode: String!, $session: Float!) {
+    createStripeSession(referralCode: $referralCode, session: $session)
+  }
 
 `;
 
 function Pricing() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [success, setSuccess] = useState(false);
   const [referral, setReferral] = useState(false);
@@ -57,6 +63,9 @@ function Pricing() {
   const [result, reexecuteMe] = useQuery({ query: Me });
   const [emailResult, sendEmail] = useMutation(SendEmail);
   const [codeResult, verifyCode] = useMutation(VerifyCode);
+  const [stripeSessionResult, generateStripeSession] = useMutation(
+    GenerateStripeSession
+  );
   const { data, fetching, error } = result;
 
   const handleSubmit = (e) => {
@@ -102,6 +111,30 @@ function Pricing() {
         }
       });
     }
+  };
+  const handleIvyClick = () => {
+    const variables = {
+      referralCode: code,
+      session: 2,
+    };
+    generateStripeSession(variables).then((result) => {
+      console.log(result);
+      if (result.data.createStripeSession) {
+        router.push(result.data.createStripeSession);
+      }
+    });
+  };
+  const handlePublicClick = () => {
+    const variables = {
+      referralCode: code,
+      session: 1,
+    };
+    generateStripeSession(variables).then((result) => {
+      console.log(result);
+      if (result.data.createStripeSession) {
+        router.push(result.data.createStripeSession);
+      }
+    });
   };
 
   return (
@@ -247,7 +280,21 @@ function Pricing() {
               </section>
             </div>
             <div className={styles.bottom}>
-              <button className={styles.btn}>Level Up</button>
+              {data ? (
+                data.me ? (
+                  data.me.tier === "Ivy" ? (
+                    <button className={styles.selected}>Selected</button>
+                  ) : (
+                    <button onClick={handleIvyClick} className={styles.btn}>
+                      Level Up
+                    </button>
+                  )
+                ) : (
+                  <button onClick={handleIvyClick} className={styles.btn}>
+                    Level Up
+                  </button>
+                )
+              ) : null}
             </div>
           </div>
           <div className={styles.mainCard}>
@@ -316,7 +363,21 @@ function Pricing() {
               </section>
             </div>
             <div className={styles.bottom}>
-              <button className={styles.btn}>Go Get It</button>
+              {data ? (
+                data.me ? (
+                  data.me.tier === "Public" || data.me.tier === "Ivy" ? (
+                    <button className={styles.selected}>Selected</button>
+                  ) : (
+                    <button onClick={handlePublicClick} className={styles.btn}>
+                      Go Get It
+                    </button>
+                  )
+                ) : (
+                  <button onClick={handlePublicClick} className={styles.btn}>
+                    Go Get It
+                  </button>
+                )
+              ) : null}
               <a href="#ref">
                 <p
                   className={styles.refText}
@@ -360,8 +421,16 @@ function Pricing() {
             </div>
             <div className={styles.bottom}>
               {data ? (
-                data.me && data.me.tier === "Free" ? (
-                  <button className={styles.selected}>Selected</button>
+                data.me ? (
+                  data.me.tier === "Free" ||
+                  data.me.tier === "Public" ||
+                  data.me.tier === "Ivy" ? (
+                    <button className={styles.selected}>Selected</button>
+                  ) : (
+                    <Link href="/user/register">
+                      <button className={styles.btn}>Get Started</button>
+                    </Link>
+                  )
                 ) : (
                   <Link href="/user/register">
                     <button className={styles.btn}>Get Started</button>

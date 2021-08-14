@@ -10,8 +10,8 @@ const RequestData = `
     }
 `;
 const UpdateUser = `
-    mutation($subKey: String!, $custKey: String!) {
-      updateUserSubscriber(subKey: $subKey, custKey: $custKey)
+    mutation {
+      updateUserSubscriber
     }
 `;
 
@@ -30,11 +30,7 @@ function success() {
     if (data) {
       console.log(data);
       if (data.retrieveStripeSession.payment_status === "paid") {
-        const variables = {
-          subKey: data.retrieveStripeSession.subscription,
-          custKey: data.retrieveStripeSession.customer,
-        };
-        updateUser(variables).then((result) => {
+        updateUser().then((result) => {
           if (result.error) {
             setSuccess(false);
             return (
@@ -54,9 +50,6 @@ function success() {
             );
           } else {
             setSuccess(true);
-            setTimeout(() => {
-              router.push("/applications/");
-            }, 15000);
           }
         });
       }
@@ -209,14 +202,13 @@ function success() {
                     {data.retrieveStripeSession.customer_details.email}
                   </span>{" "}
                   with some information we'd like you to have, like your order
-                  id! I've told my AI to redirect you to the applications, but
-                  you can press the button below to speed up the process if
-                  you'd like.
+                  id! You have access to our services now so feel free to hit
+                  the button below to go to the dashboard.
                 </p>
               </header>
-              <button className={styles.appBtn}>
-                <Link href="/applications/">Applications</Link>
-              </button>
+              <Link href="/user/dashboard">
+                <button className={styles.appBtn}>Dashboard</button>
+              </Link>
             </section>
           )}
         </div>

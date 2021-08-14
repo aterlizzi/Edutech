@@ -17,12 +17,6 @@ export class GenerateIdeasResolver {
   ): Promise<Array<string[]> | undefined> {
     const user = await UserData.findOne(ctx.req.session.userId);
     if (!user) return undefined;
-    const cooldown = user.cooldown;
-    if (!lessThanTenMinutesAgo(cooldown)) {
-      user.cooldown = Date.now();
-      user.totalIdeasRequested = 0;
-      await user.save();
-    }
     if (user.tier === "Free" && user.totalIdeasRequested >= 30)
       return undefined;
     if (user.tier === "Public" && user.totalIdeasRequested >= 4256)
@@ -106,13 +100,6 @@ export class GenerateIdeasResolver {
     return result;
   }
 }
-
-const lessThanTenMinutesAgo = (cooldown: number) => {
-  const TENMINUTES = 1000 * 60 * 10;
-  const tenMinutesAgo = Date.now() - TENMINUTES;
-
-  return cooldown > tenMinutesAgo;
-};
 
 const handleSensitiveRequest = async (
   finalFormArr: string[][],

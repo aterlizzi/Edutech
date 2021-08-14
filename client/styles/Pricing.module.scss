@@ -108,7 +108,7 @@
         margin: 0em 0.5em 0em 0em;
         font-weight: 600;
         cursor: pointer;
-        width: 20%;
+        width: 30%;
       }
       .copied {
         margin: 0;
@@ -251,6 +251,17 @@
         }
         .bottom {
           width: 100%;
+          .selected {
+            background: $clr-bg;
+            color: $clr-highEmpha;
+            outline: none;
+            border: 1px solid rgba($clr-primaryRGB, 0.5);
+            font-size: 1em;
+            font-family: "Inter", sans-serif;
+            font-weight: 500;
+            padding: 0.5em 1em;
+            width: 100%;
+          }
           .refText {
             margin: 1em 0em 0em 0em;
             cursor: pointer;

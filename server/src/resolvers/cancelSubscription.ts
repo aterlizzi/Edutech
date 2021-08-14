@@ -11,8 +11,12 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST_KEY);
 export class cancelSubscriptionResolver {
   @Mutation(() => String)
   async cancelSubscription(@Ctx() ctx: MyContext): Promise<string> {
-    const user = await UserData.findOne(ctx.req.session.userId);
-    if (!user || !user.subKey) return "";
+    const user = await UserData.findOne({
+      where: { id: ctx.req.session.userId },
+    });
+    if (!user) return "";
+    const subscription = await stripe.customers.retrieve(user.custKey);
+    console.log(subscription);
     const subKey = user.subKey;
     stripe.subscriptions.del(subKey);
     user.subKey = "";
