@@ -35,7 +35,6 @@ import {
   faWallet,
 } from "@fortawesome/free-solid-svg-icons";
 import Layout from "../../components/layout";
-import { setLazyProp } from "next/dist/next-server/server/api-utils";
 
 const CancelSubscription = `
   mutation {
@@ -65,6 +64,11 @@ const Me = `
             }
         }
     }
+`;
+const CreateCustomerPortal = `
+  mutation {
+    createCustomerPortal
+  }
 `;
 const ChangePasswordEmail = `
     mutation {
@@ -130,9 +134,16 @@ function settings({ sid }) {
     query: AllInvoices,
   });
   const { data, fetching, error } = meResult;
+  const [portalResult, createPortal] = useMutation(CreateCustomerPortal);
 
   // functions
-
+  const handlePortal = () => {
+    createPortal().then((result) => {
+      if (result.data.createCustomerPortal) {
+        router.push(result.data.createCustomerPortal);
+      }
+    });
+  };
   const handleUnsubscribe = () => {
     cancelSub().then((result) => {
       if (result.error) {
@@ -332,14 +343,20 @@ function settings({ sid }) {
             <section className={styles.accountContainer}>
               <div className={styles.circle}>
                 <FontAwesomeIcon
-                  icon={sid ? faUserSecret : faUser}
+                  icon={
+                    data.me
+                      ? data.me.tier !== "Free"
+                        ? faUserSecret
+                        : faUser
+                      : null
+                  }
                   className={styles.userIcon}
                   size={"lg"}
                 />
               </div>
               <div className={styles.userInfo}>
                 <h3 className={styles.username}>{data.me.username}</h3>
-                <p className={styles.info}>{sid ? "Subscribed" : "Free"}</p>
+                <p className={styles.info}>{data.me ? data.me.tier : null}</p>
               </div>
             </section>
           ) : null}
@@ -463,8 +480,9 @@ function settings({ sid }) {
                   <h3 className={styles.subtitle}>Billing</h3>
                 </header>
                 <p className={styles.desc}>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Pariatur dolorem quidem saepe eveniet obcaecati nisi.
+                  Billing contains all relevant billing information including
+                  canceling and managing subscriptions and manging your customer
+                  portal.
                 </p>
               </div>
               <div className={styles.option} onClick={() => setSection(3)}>
@@ -861,14 +879,36 @@ function settings({ sid }) {
                   </span>
                 </p>
               </div>
+              {data ? (
+                data.me ? (
+                  data.me.subscriber ? (
+                    <div className={styles.typeContainer}>
+                      <h5 className={styles.catTitle}>Customer Portal</h5>
+                      <p className={styles.statDesc}>
+                        Click to enter the customer portal. Inside the customer
+                        portal you can securely upgrade or cancel your
+                        subscription. You can also view previous invoices or
+                        change your card information. The portal is hosted by
+                        Stripe, our payment gateway.
+                      </p>
+                      <button
+                        onClick={handlePortal}
+                        className={styles.cancelSubButton}
+                      >
+                        Visit Customer Portal
+                      </button>
+                    </div>
+                  ) : null
+                ) : null
+              ) : null}
               <div className={styles.typeContainer}>
                 <h5 className={styles.catTitle}>Cancellation</h5>
                 <p className={styles.statDesc}>
                   We'd be sad to see you go but if that is the right step for
-                  you, you can cancel your subscription at any time below! Keep
-                  in mind cancellation of your plan will result in immediate
-                  loss of all related goods and services so we recommending
-                  riding it out until your last day!
+                  you, you can cancel your subscription at any time below or in
+                  the customer portal! Keep in mind cancellation of your plan
+                  will result in immediate loss of all related goods and
+                  services so we recommending riding it out until your last day!
                 </p>
                 {data.me.subscriber ? (
                   !confirmCancel ? (

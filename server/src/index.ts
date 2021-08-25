@@ -96,8 +96,33 @@ const main = async () => {
           const userId = event.data.object.client_reference_id;
           const order_id = orderId.generate();
           if (!userId) break;
-          const user = await UserData.findOne({ where: { id: userId } });
+          const user = await UserData.findOne({
+            where: { id: userId },
+            relations: ["referrer", "referred"],
+          });
           if (!user) break;
+          if (event.data.object.metadata) {
+            if (event.data.object.metadata.coupon === "referredCoupon") {
+              user.hasReferredCoupon = false;
+            }
+          }
+          if (user.referredCode !== "") {
+            const friend = await UserData.findOne({
+              where: { referralCode: user.referredCode },
+            });
+            if (friend) {
+              user.referrer = friend;
+              friend.hasReferredCoupon = true;
+              if (friend.subKey !== "") {
+                await stripe.subscriptions.update(friend.subKey, {
+                  coupon: process.env.STRIPE_REFERRED_COUPON_ID,
+                });
+              }
+              await friend.save();
+            }
+          }
+          user.redeemedReferralCoupon = true;
+          user.referredCode = "";
           user.custKey = event.data.object.customer;
           user.subscriber = true;
           user.orderId = order_id;
@@ -122,8 +147,9 @@ const main = async () => {
             default:
               break;
           }
-          console.log("run");
           await user.save();
+          break;
+        case "invoice.created":
           break;
         case "invoice.paid":
           const invoiceCustkey = event.data.object.customer;
@@ -135,6 +161,33 @@ const main = async () => {
           invoiceCust.current_period_end = parseInt(periodEnd);
           invoiceCust.totalIdeasRequested = 0;
           await invoiceCust.save();
+          break;
+        case "customer.subscription.updated":
+          const updatedSubcriptionUser = await UserData.findOne({
+            where: { custKey: event.data.object.customer },
+          });
+          if (!updatedSubcriptionUser) break;
+          const priceKey = event.data.object.items.data[0].price.id;
+          const periodSubEnd = parseInt(event.data.object.current_period_end);
+          switch (priceKey) {
+            case process.env.STRIPE_SECRET_PUBLICUNIVERSITY_PRICE_KEY:
+              updatedSubcriptionUser.tier = "Public";
+              updatedSubcriptionUser.current_period_end = periodSubEnd;
+              break;
+            case process.env.STRIPE_SECRET_PUBLICUNIVERSITY_DISCOUNT_PRICE_KEY:
+              updatedSubcriptionUser.tier = "Public";
+              updatedSubcriptionUser.current_period_end = periodSubEnd;
+              break;
+            case process.env.STRIPE_SECRET_IVYLEAGUE_PRICE_KEY:
+              updatedSubcriptionUser.tier = "Ivy";
+              updatedSubcriptionUser.current_period_end = periodSubEnd;
+              break;
+            case process.env.STRIPE_SECRET_IVYLEAGUE_DISCOUNT_PRICE_KEY:
+              updatedSubcriptionUser.tier = "Ivy";
+              updatedSubcriptionUser.current_period_end = periodSubEnd;
+              break;
+          }
+          await updatedSubcriptionUser.save();
           break;
         case "customer.subscription.deleted":
           const customer = event.data.object.customer;

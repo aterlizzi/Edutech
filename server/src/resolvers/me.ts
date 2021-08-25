@@ -7,7 +7,8 @@ export class MeResolver {
   @Query(() => UserData, { nullable: true })
   async me(@Ctx() ctx: MyContext): Promise<UserData | undefined> {
     if (!ctx.req.session.userId) return undefined;
-    return await UserData.findOne(ctx.req.session.userId, {
+    const user = await UserData.findOne({
+      where: { id: ctx.req.session.userId },
       relations: [
         "viewed",
         "fApplications",
@@ -17,7 +18,13 @@ export class MeResolver {
         "recentApps",
         "recentApps.author",
         "savedIdeas",
+        "referrer",
       ],
     });
+    if (!user) return undefined;
+    if (user.tier === "Free" || Date.now() - user.current_period_end > 0) {
+      ctx.res.clearCookie("sid");
+    }
+    return user;
   }
 }

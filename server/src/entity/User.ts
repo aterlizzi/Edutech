@@ -45,6 +45,7 @@ export class UserData extends BaseEntity {
   @Column()
   password!: string;
 
+  @Field(() => Boolean)
   @Column("bool", { default: false })
   confirmed: boolean;
 
@@ -60,12 +61,24 @@ export class UserData extends BaseEntity {
   @Column({ default: "" })
   referredCode: string;
 
+  @Field(() => Boolean)
+  @Column({ default: false })
+  redeemedReferralCoupon: boolean;
+
+  @Field(() => Boolean)
+  @Column({ default: false })
+  hasReferredCoupon: boolean;
+
   @Field(() => UserData, { nullable: true })
-  @OneToMany(() => UserData, (user) => user.referred, { cascade: true })
-  referrer: UserData | null;
+  @ManyToOne(() => UserData, (user) => user.referred, {
+    cascade: true,
+    nullable: true,
+    onDelete: "SET NULL",
+  })
+  referrer?: UserData | null;
 
   @Field(() => [UserData])
-  @ManyToOne(() => UserData, (user) => user.referrer)
+  @OneToMany(() => UserData, (user) => user.referrer)
   referred: UserData[];
 
   @Field(() => Boolean)

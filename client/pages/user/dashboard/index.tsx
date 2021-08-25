@@ -330,7 +330,7 @@ function Dashboard({ sid }) {
             <section className={styles.accountContainer}>
               <div className={styles.circle}>
                 <FontAwesomeIcon
-                  icon={sid ? faUserSecret : faUser}
+                  icon={data.me ? (data.me.tier ? faUserSecret : faUser) : null}
                   className={styles.userIcon}
                   size={"lg"}
                 />

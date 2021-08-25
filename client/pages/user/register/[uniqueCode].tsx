@@ -1,8 +1,8 @@
-import styles from "../../../../styles/Register.module.scss";
+import styles from "../../../styles/Register.module.scss";
 import Image from "next/image";
 import Link from "next/link";
-import LogoNoText from "../../../../public/logoWithoutText.png";
-import registerPic from "../../../../public/register-bg.jpg";
+import LogoNoText from "../../../public/logoWithoutText.png";
+import registerPic from "../../../public/register-bg.jpg";
 import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -28,8 +28,8 @@ const Resend = `
   }
 `;
 const FindSession = `
-  mutation($token: String!) {
-      findSession(token: $token)
+  mutation($token: String!, $id: Float!, $code: String) {
+      findSession(token: $token, id: $id, code: $code)
   }
 `;
 
@@ -79,21 +79,33 @@ function register() {
         setPasswordErr(tempPasswordArr);
       } else {
         setSuccess(true);
+        const token = router.query.uniqueCode as string;
+        const newTokens = token.split("-");
+        let newVariables;
+        if (newTokens[1] === "") {
+          newVariables = {
+            token: newTokens[0],
+            id: parseInt(result.data.createUser.id),
+          };
+        } else {
+          const code = newTokens[1];
+          newVariables = {
+            token: newTokens[0],
+            id: parseInt(result.data.createUser.id),
+            code,
+          };
+        }
+        setTimeout(() => {
+          findSession(newVariables).then((newResult) => {
+            if (newResult.data.findSession) {
+              router.push(newResult.data.findSession);
+            } else {
+              router.push("/");
+            }
+          });
+        }, 1000 * 10);
       }
     });
-    const token = router.query.token;
-    const newVariables = {
-      token,
-    };
-    setTimeout(() => {
-      findSession(newVariables).then((result) => {
-        if (result.data.findSession) {
-          router.push(result.data.findSession);
-        } else {
-          router.push("/");
-        }
-      });
-    }, 1000 * 10);
   };
 
   const handleReconfirm = () => {

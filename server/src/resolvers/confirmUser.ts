@@ -16,7 +16,10 @@ export class ConfirmUserResolver {
   ): Promise<boolean> {
     const userId = await redis.get(confirmationPrefix + token);
     if (!userId) return false;
-    await UserData.update({ id: parseInt(userId, 10) }, { confirmed: true });
+    const user = await UserData.findOne({ where: { id: userId } });
+    if (!user) return false;
+    user.confirmed = true;
+    await user.save();
     await redis.del(confirmationPrefix + token);
     ctx.req.session.userId = userId;
     ctx.res.cookie("vid", v4(), {

@@ -1,0 +1,159 @@
+@import "utils/variables";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap");
+
+.main {
+  display: grid;
+  grid-template-columns: 1fr 7fr 5fr 3fr;
+  font-family: "Inter", sans-serif;
+  color: $clr-highEmpha;
+  min-height: 100vh;
+  background: $clr-bg;
+  .toolbar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background: $clr-bg1;
+    .top {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      padding-top: 2em;
+      width: 100%;
+      .icon {
+        font-size: 1.25em;
+        color: $clr-primary;
+        margin-bottom: 1.5em;
+        cursor: pointer;
+      }
+      .iconCircle {
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid $clr-bg4;
+        margin-bottom: 1.5em;
+        .icon {
+          margin: 0;
+          color: $clr-primary;
+          font-size: 0.85em;
+        }
+      }
+    }
+    .bottom {
+      .circle {
+        width: 40px;
+        height: 40px;
+        border: 1px solid $clr-bg4;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        margin-bottom: 1em;
+        .questionMark {
+          font-size: 1.25em;
+          color: $clr-primary;
+          margin: 0em;
+        }
+      }
+    }
+  }
+  .writing {
+    position: relative;
+    .textContainer {
+      margin-bottom: 3em;
+      .form {
+        .textArea {
+          resize: none;
+          margin-left: 20px;
+          margin-top: 100px;
+          width: 100%;
+          min-height: 650px;
+          outline: none;
+          border: none;
+          color: $clr-highEmpha;
+          font-size: 1em;
+          font-family: "Inter", sans-serif;
+          // background: $clr-bg1;
+          background: transparent;
+          padding: 1em;
+        }
+      }
+    }
+    .writingFooter {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      .words {
+        margin: 0;
+      }
+    }
+    .header {
+      top: 20px;
+      left: 20px;
+      position: absolute;
+      .presetContainer {
+        display: flex;
+        align-items: center;
+        background: $clr-bg1;
+        padding: 0.5em 1em 0em 1em;
+        cursor: pointer;
+        .preset {
+          margin: 0em 1em 0.5em 0em;
+        }
+        .icon {
+          margin-bottom: 0.5em;
+        }
+        .active {
+          animation: rotate 100ms linear 25ms forwards;
+        }
+      }
+      .dropdn {
+        transform: scale(0);
+        transform-origin: top;
+        position: absolute;
+        background: #181818;
+        width: 100%;
+        .selection {
+          margin: 0;
+          padding: 0.5em 1em 0.5em 1em;
+          cursor: pointer;
+          &:hover {
+            background: $clr-bg3;
+          }
+        }
+      }
+      .active {
+        animation: preset 100ms linear 25ms forwards;
+      }
+    }
+  }
+}
+
+@keyframes preset {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(0.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(90deg);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
+}

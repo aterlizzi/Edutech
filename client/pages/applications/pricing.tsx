@@ -27,6 +27,7 @@ const Me = `
       username
       referralCode
       tier
+      hasReferredCoupon
     }
   }
 
@@ -45,7 +46,11 @@ const GenerateStripeSession = `
   mutation($referralCode: String!, $session: Float!) {
     createStripeSession(referralCode: $referralCode, session: $session)
   }
-
+`;
+const CreateCustomerPortal = `
+  mutation {
+    createCustomerPortal
+  }
 `;
 
 function Pricing() {
@@ -67,7 +72,7 @@ function Pricing() {
     GenerateStripeSession
   );
   const { data, fetching, error } = result;
-
+  console.log(data);
   const handleSubmit = (e) => {
     e.preventDefault();
     if (email !== "") {
@@ -224,7 +229,15 @@ function Pricing() {
                 <div className={styles.pricing}>
                   <h5
                     style={
-                      validCode ? { textDecoration: "line-through" } : null
+                      validCode
+                        ? { textDecoration: "line-through" }
+                        : data
+                        ? data.me
+                          ? data.me.hasReferredCoupon
+                            ? { textDecoration: "line-through" }
+                            : null
+                          : null
+                        : null
                     }
                     className={styles.price}
                   >
@@ -232,7 +245,15 @@ function Pricing() {
                   </h5>
                   <p
                     style={
-                      validCode ? { textDecoration: "line-through" } : null
+                      validCode
+                        ? { textDecoration: "line-through" }
+                        : data
+                        ? data.me
+                          ? data.me.hasReferredCoupon
+                            ? { textDecoration: "line-through" }
+                            : null
+                          : null
+                        : null
                     }
                     className={styles.perMonth}
                   >
@@ -247,6 +268,18 @@ function Pricing() {
                     </div>
                     <p className={styles.off}>$20 Off!</p>
                   </>
+                ) : data ? (
+                  data.me ? (
+                    data.me.hasReferredCoupon ? (
+                      <>
+                        <div className={styles.pricing}>
+                          <h5 className={styles.price}>49.99</h5>
+                          <p className={styles.perMonth}>/month</p>
+                        </div>
+                        <p className={styles.off}>$20 Off!</p>
+                      </>
+                    ) : null
+                  ) : null
                 ) : null}
               </section>
               <section className={styles.features}>
@@ -307,7 +340,15 @@ function Pricing() {
                 <div className={styles.pricing}>
                   <h5
                     style={
-                      validCode ? { textDecoration: "line-through" } : null
+                      validCode
+                        ? { textDecoration: "line-through" }
+                        : data
+                        ? data.me
+                          ? data.me.hasReferredCoupon
+                            ? { textDecoration: "line-through" }
+                            : null
+                          : null
+                        : null
                     }
                     className={styles.price}
                   >
@@ -315,7 +356,15 @@ function Pricing() {
                   </h5>
                   <p
                     style={
-                      validCode ? { textDecoration: "line-through" } : null
+                      validCode
+                        ? { textDecoration: "line-through" }
+                        : data
+                        ? data.me
+                          ? data.me.hasReferredCoupon
+                            ? { textDecoration: "line-through" }
+                            : null
+                          : null
+                        : null
                     }
                     className={styles.perMonth}
                   >
@@ -330,6 +379,18 @@ function Pricing() {
                     </div>
                     <p className={styles.off}>$20 Off!</p>
                   </>
+                ) : data ? (
+                  data.me ? (
+                    data.me.hasReferredCoupon ? (
+                      <>
+                        <div className={styles.pricing}>
+                          <h5 className={styles.price}>19.99</h5>
+                          <p className={styles.perMonth}>/month</p>
+                        </div>
+                        <p className={styles.off}>$20 Off!</p>
+                      </>
+                    ) : null
+                  ) : null
                 ) : null}
               </section>
               <section className={styles.features}>

@@ -1,0 +1,125 @@
+@import "utils/variables";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap");
+
+.main {
+  background: $clr-bg;
+  min-height: 100vh;
+  position: relative;
+  font-family: "Inter", sans-serif;
+  color: $clr-highEmpha;
+  .contact {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .header {
+      .title {
+        margin-top: 3em;
+        margin-bottom: 1.5em;
+      }
+    }
+    .content {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 2em;
+      place-items: center;
+      max-width: 45em;
+      width: 90%;
+      .form {
+        background: $clr-bg2;
+        padding: 1em;
+        .btnContainer {
+          display: flex;
+          justify-content: flex-end;
+          .btn {
+            cursor: pointer;
+            font-size: 1em;
+            outline: none;
+            border: none;
+            padding: 0.5em 1em;
+            background: $clr-secondary;
+          }
+        }
+        .formContainer {
+          display: flex;
+          align-items: center;
+          width: 100%;
+          margin-bottom: 1em;
+          &:last-of-type {
+            .label {
+              align-self: flex-start;
+            }
+          }
+          .specialLabel {
+            align-self: flex-start;
+          }
+          .input {
+            margin-left: auto;
+            width: 60%;
+            font-size: 1em;
+            font-family: "Inter", sans-serif;
+            background: $clr-bg2;
+            outline: none;
+            border: none;
+            padding: 0.5em 1em;
+            color: $clr-highEmpha;
+            &::placeholder {
+              color: $clr-medEmpha;
+            }
+          }
+          .textField {
+            resize: none;
+            background: $clr-bg2;
+            outline: none;
+            border: none;
+            font-size: 1em;
+            color: $clr-highEmpha;
+            font-family: "Inter", sans-serif;
+            margin-left: auto;
+            width: 60%;
+            padding: 0.5em 1em 1em 1em;
+            &::placeholder {
+              color: $clr-medEmpha;
+            }
+          }
+        }
+      }
+      .about {
+        .aboutTitle {
+          font-weight: 400;
+        }
+        .listItem {
+          display: flex;
+          align-items: center;
+          .icon {
+            margin-right: 1em;
+            color: $clr-primary;
+          }
+        }
+      }
+    }
+  }
+  .nav {
+    position: relative !important;
+    z-index: 2 !important;
+  }
+  .circle1 {
+    border-radius: 50%;
+    background: $clr-primary;
+    position: absolute;
+  }
+  .circle2 {
+    border-radius: 50%;
+    background: $clr-primary;
+    position: absolute;
+  }
+  .circle3 {
+    border-radius: 50%;
+    background: $clr-primary;
+    position: absolute;
+  }
+  .circle4 {
+    border-radius: 50%;
+    background: $clr-primary;
+    position: absolute;
+  }
+}

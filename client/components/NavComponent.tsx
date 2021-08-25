@@ -77,17 +77,15 @@ function NavComponent({ data, vid, sid }) {
         </div>
         <div className={styles.accountContainer}>
           {!data ? (
-            <div className={styles.signinContainer}>
-              <p className={styles.accountText}>
-                {!vid ? (
-                  <Link href="/user/register">Sign in</Link>
-                ) : (
-                  <Link href="/user/login">Login</Link>
-                )}
-              </p>
-              <span className={`${styles.chevron} ${styles.right}`}></span>
-              <div className={styles.chevStick}></div>
-            </div>
+            <Link href={!vid ? `/user/register` : `/user/login`}>
+              <div className={styles.signinContainer}>
+                <p className={styles.accountText}>
+                  {!vid ? "Sign in" : "Login"}
+                </p>
+                <span className={`${styles.chevron} ${styles.right}`}></span>
+                <div className={styles.chevStick}></div>
+              </div>
+            </Link>
           ) : (
             <p className={styles.username}>
               {data.username}

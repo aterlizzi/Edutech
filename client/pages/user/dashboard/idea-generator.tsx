@@ -16,6 +16,7 @@ import {
 import { GetServerSideProps } from "next";
 import { useMutation, useQuery } from "urql";
 import Link from "next/link";
+import Layout from "../../../components/layout";
 
 // queries
 
@@ -875,6 +876,10 @@ function ideaGenerator() {
 }
 
 export default ideaGenerator;
+
+ideaGenerator.getLayout = (page) => {
+  return <Layout title="Idea Generator - Edutech">{page}</Layout>;
+};
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   let isAuthenticated = false;

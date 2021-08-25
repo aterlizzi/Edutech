@@ -24,7 +24,9 @@ const results = Object.create(null);
 export class UsersResolver {
   @Query(() => [UserData])
   async findUsers(): Promise<UserData[] | undefined> {
-    return await UserData.find({ relations: ["viewed"] });
+    return await UserData.find({
+      relations: ["viewed", "referrer", "referred"],
+    });
   }
   @Query(() => UserData, { nullable: true })
   async findUser(
@@ -62,25 +64,51 @@ export class UsersResolver {
     await UserData.delete(user.id);
     return true;
   }
+  @Mutation(() => UserData, { nullable: true })
+  async editUser(
+    @Arg("id") id: number,
+    @Arg("type") type: string,
+    @Arg("value", { nullable: true }) value: string
+  ): Promise<UserData | undefined> {
+    const user = await UserData.findOne({ where: { id } });
+    if (!user) return undefined;
+    if (type === "ip_address") {
+      user.ip_address = value;
+    }
+    if (type === "current_period_end") {
+      user.current_period_end = 0;
+    }
+    return await user.save();
+  }
   @Mutation(() => Boolean)
   async verifyCode(
     @Arg("code") code: string,
     @Ctx() ctx: MyContext
   ): Promise<boolean> {
     const user = await UserData.findOne({ where: { referralCode: code } });
-    const me = await UserData.findOne(ctx.req.session.userId);
+    const me = await UserData.findOne({
+      where: { id: ctx.req.session.userId },
+    });
     const currentAddress = parseAddress();
     if (!user) return false;
-    if (user.email === me?.email) return false;
-    if (
-      user.ip_address === currentAddress ||
-      user.ip_address === me?.ip_address
-    ) {
-      const username = user.username;
-      const email = user.email;
-      sendAntiDupingMail(email, username);
-      return false;
+    if (me) {
+      if (me.redeemedReferralCoupon) return false;
+      if (user.email === me.email) return false;
+      // if (user.ip_address === me.ip_address) {
+      //   const username = user.username;
+      //   const email = user.email;
+      //   sendAntiDupingMail(email, username);
+      //   return false;
+      // }
     }
+    // else {
+    //   if ((user.ip_address = currentAddress)) {
+    //     const username = user.username;
+    //     const email = user.email;
+    //     sendAntiDupingMail(email, username);
+    //     return false;
+    //   }
+    // }
     return true;
   }
 }
