@@ -55,7 +55,7 @@ function NavComponent({ data, vid, sid }) {
         <div className={styles.linkContainer}>
           <ul className={styles.list}>
             <li className={styles.link}>
-              <Link href="/applications/product">Product</Link>
+              <Link href="/product">Product</Link>
             </li>
             <li className={styles.link}>
               <Link href="/applications/pricing">Pricing</Link>
@@ -191,7 +191,7 @@ function NavComponent({ data, vid, sid }) {
                 />
               </div>
               <div className={styles.linkContainer}>
-                <Link href="/applications/product">
+                <Link href="/product">
                   <div className={styles.listItemContainer}>Product</div>
                 </Link>
                 <Link href="/applications/pricing">

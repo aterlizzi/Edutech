@@ -3,7 +3,7 @@ import React from "react";
 import { useQuery } from "urql";
 import Layout from "../components/layout";
 import NavComponent from "../components/NavComponent";
-import styles from "../styles/About.module.scss";
+import styles from "../styles/Product.module.scss";
 
 const Me = `
   query {
@@ -14,7 +14,7 @@ const Me = `
 
 `;
 
-function About({ vid, sid }) {
+function Product({ vid, sid }) {
   const [result, reexecuteMe] = useQuery({ query: Me });
   const { data, fetching, error } = result;
 
@@ -25,11 +25,11 @@ function About({ vid, sid }) {
   );
 }
 
-About.getLayout = (page) => {
-  return <Layout title="About - Edutech">{page}</Layout>;
+Product.getLayout = (page) => {
+  return <Layout title="Product - Edutech">{page}</Layout>;
 };
 
-export default About;
+export default Product;
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   let vid = false;
