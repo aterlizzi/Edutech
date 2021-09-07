@@ -29,6 +29,7 @@ import {
   faStar,
   faTimes,
   faUser,
+  faUsersCog,
   faUserSecret,
 } from "@fortawesome/free-solid-svg-icons";
 import Layout from "../../../components/layout";
@@ -242,20 +243,8 @@ function Dashboard({ sid }) {
                   icon={faEnvelopeOpenText}
                   className={styles.icon}
                 />
-                {sid ? (
-                  <FontAwesomeIcon icon={faClipboard} className={styles.icon} />
-                ) : (
-                  <>
-                    <FontAwesomeIcon
-                      icon={faCreditCard}
-                      className={styles.icon}
-                    />
-                    <FontAwesomeIcon
-                      icon={faDollarSign}
-                      className={styles.icon}
-                    />
-                  </>
-                )}
+                <FontAwesomeIcon icon={faUsersCog} className={styles.icon} />
+                <FontAwesomeIcon icon={faDollarSign} className={styles.icon} />
               </div>
               <div className={styles.linksContainer}>
                 <Link href="/">
@@ -267,20 +256,12 @@ function Dashboard({ sid }) {
                 <Link href="/contact">
                   <p className={styles.link}>Contact</p>
                 </Link>
-                {sid ? (
-                  <Link href="/applications/">
-                    <p className={styles.link}>Applications</p>
-                  </Link>
-                ) : (
-                  <>
-                    <Link href="/applications/payments">
-                      <p className={styles.link}>Purchase</p>
-                    </Link>
-                    <Link href="/applications/pricing">
-                      <p className={styles.link}>Pricing</p>
-                    </Link>
-                  </>
-                )}
+                <Link href="/usecase">
+                  <p className={styles.link}>Use cases</p>
+                </Link>
+                <Link href="/applications/pricing">
+                  <p className={styles.link}>Pricing</p>
+                </Link>
               </div>
             </div>
           </section>
@@ -330,7 +311,15 @@ function Dashboard({ sid }) {
             <section className={styles.accountContainer}>
               <div className={styles.circle}>
                 <FontAwesomeIcon
-                  icon={data.me ? (data.me.tier ? faUserSecret : faUser) : null}
+                  icon={
+                    data
+                      ? data.me
+                        ? data.me.tier !== "Free"
+                          ? faUserSecret
+                          : faUser
+                        : null
+                      : null
+                  }
                   className={styles.userIcon}
                   size={"lg"}
                 />
@@ -384,22 +373,11 @@ function Dashboard({ sid }) {
                 />
               </div>
             </Link>
-            {sid ? (
-              <Link href="/applications">
-                <div className={styles.iconContainer}>
-                  <FontAwesomeIcon icon={faClipboard} className={styles.icon} />
-                </div>
-              </Link>
-            ) : (
-              <Link href="/applications/payments">
-                <div className={styles.iconContainer}>
-                  <FontAwesomeIcon
-                    icon={faCreditCard}
-                    className={styles.icon}
-                  />
-                </div>
-              </Link>
-            )}
+            <Link href="/applications/payments">
+              <div className={styles.iconContainer}>
+                <FontAwesomeIcon icon={faUsersCog} className={styles.icon} />
+              </div>
+            </Link>
             <Link href="/user/dashboard/idea-generator">
               <div className={styles.iconContainer}>
                 <FontAwesomeIcon icon={faLightbulb} className={styles.icon} />
@@ -432,7 +410,18 @@ function Dashboard({ sid }) {
             </Link>{" "}
             <div className={styles.userContainer}>
               <div className={styles.circle}>
-                <FontAwesomeIcon icon={faUserSecret} className={styles.icon} />
+                <FontAwesomeIcon
+                  icon={
+                    data
+                      ? data.me
+                        ? data.me.tier !== "Free"
+                          ? faUserSecret
+                          : faUser
+                        : null
+                      : null
+                  }
+                  className={styles.icon}
+                />
               </div>
             </div>
           </section>
@@ -579,7 +568,15 @@ function Dashboard({ sid }) {
                               <section className={styles.userContainer}>
                                 <div className={styles.circle}>
                                   <FontAwesomeIcon
-                                    icon={faUser}
+                                    icon={
+                                      data
+                                        ? data.me
+                                          ? data.me.tier !== "Free"
+                                            ? faUserSecret
+                                            : faUser
+                                          : null
+                                        : null
+                                    }
                                     className={styles.icon}
                                     size={"sm"}
                                   />

@@ -16,13 +16,13 @@
   display: inline-block;
   vertical-align: top;
   position: absolute;
-  left: 47.5%;
+  left: 50%;
   top: 70%;
   transform: translateX(-50%) translateY(-50%);
 }
 .svg .path,
 .svg rect {
-  fill: $clr-highEmpha;
+  fill: black;
 }
 
 .main {
@@ -33,55 +33,131 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  position: relative;
+  .logo {
+    max-width: 150px;
+    width: 100%;
+  }
+  .optionsContainer {
+    text-align: center;
+    margin-top: 1em;
+    font-size: 0.85em;
+    .signup {
+      color: $clr-medEmpha;
+      margin-bottom: 0.75em;
+      .link {
+        cursor: pointer;
+        color: $clr-primary;
+      }
+    }
+    .forgotPassText {
+      margin: 0;
+      color: $clr-primary;
+      cursor: pointer;
+    }
+  }
+  .circle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    width: 60px;
+    background: $clr-bg2;
+    .icon {
+      color: $clr-primary;
+      font-size: 1.4em;
+    }
+  }
   .card {
     background: $clr-bg1;
-    padding: 2em;
+    padding: 2em 5em 2em 5em;
     border-radius: 0.5em;
     width: 90%;
     max-width: 30em;
+    position: relative;
+    margin-top: 1.75em;
+    .return {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      .times {
+        font-size: 1.25em;
+        color: $clr-secondary;
+      }
+    }
     .header {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      text-align: center;
       .logo {
-        max-width: 150px;
-        width: 100%;
-        align-self: flex-start;
+        margin-bottom: 1em;
       }
       .title {
         font-size: 1.5em;
-        margin-top: 1em;
+        align-self: flex-start;
+        margin: 0em 0em 0.5em 0em;
+        font-weight: 500;
       }
       .subText {
         color: $clr-medEmpha;
         line-height: 25px;
-        margin-bottom: 2em;
+        margin: 0em 0em 1em 0em;
+        align-self: flex-start;
       }
     }
     .form {
       display: flex;
       flex-direction: column;
-      .emailUserInput {
-        background: rgba(black, 0.2);
-        margin-bottom: 1.5em;
-        outline: none;
-        border: solid 1px rgba($clr-primaryRGB, 0.25);
-        padding: 1em 2em;
-        color: $clr-highEmpha;
+      .success {
+        color: $clr-secondary;
+        margin: 0;
+        font-size: 0.85em;
+      }
+      .inputContainer {
+        background: $clr-bg;
+        border: 1px solid rgba($clr-primaryRGB, 0.25);
+        display: flex;
+        align-items: center;
+        padding-left: 1em;
+        margin-bottom: 1em;
+        &:hover {
+          border: 1px solid rgba($clr-primaryRGB, 0.5);
+        }
+        .icon {
+          margin-right: 1em;
+        }
+        .emailUserInput,
+        .passwordInput,
+        .input {
+          color: $clr-highEmpha;
+          background: transparent;
+          border: none;
+          outline: none;
+          width: 100%;
+          height: 100%;
+          padding: 1em 0em;
+          font-family: "Inter", sans-serif;
+          &::placeholder {
+            color: $clr-medEmpha;
+          }
+        }
+      }
+      .specialContainer {
+        border: 1px solid rgba($clr-secondaryRGB, 0.25);
+        &:hover {
+          border: 1px solid rgba($clr-secondaryRGB, 0.5);
+        }
       }
       .emailUserInput::placeholder,
       .passwordInput::placeholder {
         color: $clr-medEmpha;
-      }
-      .passwordInput {
-        background: rgba(black, 0.2);
-        margin-bottom: 1em;
-        outline: none;
-        border: solid 1px rgba($clr-primaryRGB, 0.25);
-        padding: 1em 2em;
-        color: $clr-highEmpha;
       }
       .errorContainer {
         background: $clr-error;
@@ -99,37 +175,66 @@
           outline: none;
           border: none;
           border-radius: 0.5em;
-          padding: 0.8em 0em;
           margin-bottom: 1em;
+          padding: 0.75em 1em;
           margin-top: 2em;
-          font-size: 1.25em;
+          font-size: 1em;
           cursor: pointer;
           width: 100%;
           font-family: "Inter", sans-serif;
         }
       }
     }
-
-    .bottomContainer {
-      .forgotPassContainer {
-        display: flex;
-        align-items: center;
-        .forgotPassText {
-          color: $clr-medEmpha;
-          font-size: 0.85em;
-          margin-left: 1em;
-          margin-right: 3em;
-          .span {
-            color: $clr-primary;
-            cursor: pointer;
-          }
-        }
-      }
-      .createAccountText {
-        font-size: 0.85em;
-        color: $clr-primary;
-        cursor: pointer;
-      }
+  }
+  .circle1 {
+    border-radius: 50%;
+    height: 200px;
+    width: 200px;
+    position: absolute;
+    top: 10px;
+    left: -100px;
+    background: $clr-primary;
+  }
+  .circle2 {
+    border-radius: 50%;
+    height: 75px;
+    width: 75px;
+    position: absolute;
+    bottom: 50px;
+    left: 200px;
+    background: $clr-primary;
+  }
+  .circle3 {
+    border-radius: 50%;
+    height: 125px;
+    width: 125px;
+    position: absolute;
+    bottom: 200px;
+    right: 100px;
+    background: $clr-primary;
+  }
+}
+@media (max-width: 430px) {
+  .main {
+    .card {
+      padding: 5em 2em 5em 2em;
+    }
+  }
+}
+@media (max-width: 500px) {
+  .main {
+    .circle1 {
+      display: none;
+    }
+  }
+}
+@media (max-width: 1000px) {
+  .main {
+    .circle2 {
+      display: none;
+    }
+    .circle3 {
+      display: none;
     }
   }
 }

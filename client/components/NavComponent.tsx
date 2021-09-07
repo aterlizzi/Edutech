@@ -20,6 +20,7 @@ import {
   faUser,
   faSignInAlt,
   faChevronDown,
+  faUsersCog,
 } from "@fortawesome/free-solid-svg-icons";
 import Burger from "@animated-burgers/burger-slip";
 import { useState } from "react";
@@ -55,20 +56,16 @@ function NavComponent({ data, vid, sid }) {
         <div className={styles.linkContainer}>
           <ul className={styles.list}>
             <li className={styles.link}>
-              <Link href="/product">Product</Link>
+              <Link href="/product">Products</Link>
             </li>
             <li className={styles.link}>
               <Link href="/applications/pricing">Pricing</Link>
             </li>
             <li className={styles.link}>
-              {!sid ? (
-                <Link href="/applications/payments">Purchase</Link>
-              ) : (
-                <Link href="/applications/">Applications</Link>
-              )}
+              <Link href="/usecase">Use cases</Link>
             </li>
             <li className={styles.link}>
-              <Link href="/about">About</Link>
+              <Link href="/about">Company</Link>
             </li>
             <li className={styles.link}>
               <Link href="/contact">Contact</Link>
@@ -177,10 +174,7 @@ function NavComponent({ data, vid, sid }) {
                 <FontAwesomeIcon icon={faTags} className={styles.icon} />
                 <FontAwesomeIcon icon={faDollarSign} className={styles.icon} />
                 {!sid ? (
-                  <FontAwesomeIcon
-                    icon={faCreditCard}
-                    className={styles.icon}
-                  />
+                  <FontAwesomeIcon icon={faUsersCog} className={styles.icon} />
                 ) : (
                   <FontAwesomeIcon icon={faClipboard} className={styles.icon} />
                 )}
@@ -192,22 +186,16 @@ function NavComponent({ data, vid, sid }) {
               </div>
               <div className={styles.linkContainer}>
                 <Link href="/product">
-                  <div className={styles.listItemContainer}>Product</div>
+                  <div className={styles.listItemContainer}>Products</div>
                 </Link>
                 <Link href="/applications/pricing">
                   <div className={styles.listItemContainer}>Pricing</div>
                 </Link>
-                {!sid ? (
-                  <Link href="/applications/payments">
-                    <div className={styles.listItemContainer}>Purchase</div>
-                  </Link>
-                ) : (
-                  <Link href="/applications">
-                    <div className={styles.listItemContainer}>Applications</div>
-                  </Link>
-                )}
+                <Link href="/usecase">
+                  <div className={styles.listItemContainer}>Use cases</div>
+                </Link>
                 <Link href="/about">
-                  <div className={styles.listItemContainer}>About</div>
+                  <div className={styles.listItemContainer}>Company</div>
                 </Link>
                 <Link href="/contact">
                   <div className={styles.listItemContainer}>Contact</div>

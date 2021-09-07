@@ -12,6 +12,7 @@ import {
 import { useState } from "react";
 import { useMutation } from "urql";
 import { GetServerSideProps } from "next";
+import Layout from "../../../components/layout";
 
 const Register = `
   mutation ($options: createUserInput!) {
@@ -97,7 +98,7 @@ function register() {
           </div>
           <header className={`${styles.header} ${styles.flexCol}`}>
             <div className={styles.title}>
-              Browse applications.
+              Click a button.
               <br />
               Get inspired.
               <br />
@@ -292,6 +293,9 @@ function register() {
     </main>
   );
 }
+register.getLayout = (page) => {
+  return <Layout title="Register - Edutech">{page}</Layout>;
+};
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   let isAuthenticated = false;

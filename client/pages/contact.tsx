@@ -36,7 +36,6 @@ function Contact({ vid, sid }) {
   useEffect(() => {
     autosize(document.querySelector("textarea"));
   }, []);
-  console.log(emailResult.fetching);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -214,8 +213,6 @@ function Contact({ vid, sid }) {
       </section>
       <div className={styles.circle1}></div>
       <div className={styles.circle2}></div>
-      <div className={styles.circle3}></div>
-      <div className={styles.circle4}></div>
     </main>
   );
 }

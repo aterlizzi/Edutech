@@ -65,7 +65,7 @@
         .icon {
           font-size: 1.25em;
           cursor: pointer;
-          color: $clr-secondary;
+          color: $clr-primary;
         }
       }
       .learnMain {
@@ -104,6 +104,35 @@
         }
       }
       .content {
+        .inputContainer {
+          background: $clr-bg;
+          display: flex;
+          align-items: center;
+          margin-top: 1em;
+          padding-left: 1em;
+          border: 1px solid rgba($clr-primaryRGB, 0.25);
+          &:hover {
+            border: 1px solid rgba($clr-primaryRGB, 0.5);
+          }
+          .icon {
+            font-size: 1.25em;
+            color: $clr-primary;
+            margin-right: 0.5em;
+          }
+          .input {
+            background: transparent;
+            height: 100%;
+            width: 100%;
+            padding: 1em 0.5em;
+            outline: none;
+            border: none;
+            color: $clr-highEmpha;
+            font-family: "Inter", sans-serif;
+            &::placeholder {
+              color: $clr-medEmpha;
+            }
+          }
+        }
         .contentWarningContainer {
           display: flex;
           align-items: center;
@@ -193,6 +222,22 @@
           padding: 0.5em 0em;
           margin: 2em 0em 1em 0em;
           font-weight: 500;
+        }
+        .circleContainer {
+          display: flex;
+          justify-content: center;
+          .circleOne {
+            border-radius: 50%;
+            margin-right: 0.5em;
+            height: 9px;
+            width: 9px;
+            background: $clr-highEmpha;
+          }
+          .circleTwo {
+            border-radius: 50%;
+            height: 9px;
+            width: 9px;
+          }
         }
       }
     }
