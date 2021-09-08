@@ -383,6 +383,9 @@
             font-weight: 500;
             padding: 0.5em 1em;
             width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
           }
         }
       }
@@ -547,6 +550,20 @@
       }
     }
   }
+}
+.loader {
+  margin: 0 0 2em;
+  height: 100px;
+  width: 20%;
+  text-align: center;
+  padding: 1em;
+  margin: 0 auto 1em;
+  display: inline-block;
+  vertical-align: top;
+}
+.svg .path,
+.svg rect {
+  fill: black;
 }
 
 @media (max-width: 620px) {

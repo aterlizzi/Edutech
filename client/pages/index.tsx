@@ -33,6 +33,14 @@ Home.getLayout = (page) => {
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   let vid = false;
   let sid = false;
+  if (req.cookies.hasOwnProperty("qid")) {
+    return {
+      redirect: {
+        destination: "/user/dashboard",
+        permanent: false,
+      },
+    };
+  }
   if (req.cookies.hasOwnProperty("vid")) {
     vid = true;
   }

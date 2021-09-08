@@ -19,6 +19,7 @@ export class MeResolver {
         "recentApps.author",
         "savedIdeas",
         "referrer",
+        "referred",
       ],
     });
     if (!user) return undefined;

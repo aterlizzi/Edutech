@@ -56,6 +56,12 @@ const Me = `
             username
             email
             subscriber
+            referred {
+              id
+            }
+            referrer {
+              username
+            }
             tier
             applications {
               id
@@ -135,6 +141,7 @@ function settings({ sid }) {
     query: AllInvoices,
   });
   const { data, fetching, error } = meResult;
+  console.log(data);
   const [portalResult, createPortal] = useMutation(CreateCustomerPortal);
 
   // functions
@@ -455,16 +462,6 @@ function settings({ sid }) {
                   portal.
                 </p>
               </div>
-              <div className={styles.option} onClick={() => setSection(3)}>
-                <header className={styles.optionHeader}>
-                  <FontAwesomeIcon icon={faSearch} className={styles.icon} />
-                  <h3 className={styles.subtitle}>Additional Resources</h3>
-                </header>
-                <p className={styles.desc}>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Pariatur dolorem quidem saepe eveniet obcaecati nisi.
-                </p>
-              </div>
             </section>
           </aside>
         ) : null}
@@ -527,6 +524,24 @@ function settings({ sid }) {
                         ? data.me.viewed.length
                         : "Error"
                       : "Fetching..."}
+                  </span>
+                </p>
+                <p className={styles.status}>
+                  Total Refers:{" "}
+                  <span className={styles.special}>
+                    {data ? data.me.referred.length : "Error"}
+                  </span>
+                </p>
+                <p className={styles.status}>
+                  Referred By:{" "}
+                  <span className={styles.special}>
+                    {data
+                      ? data.me
+                        ? data.me.referrer
+                          ? data.me.referrer.username
+                          : "No Referrer"
+                        : "Error"
+                      : null}
                   </span>
                 </p>
               </div>

@@ -95,7 +95,7 @@ function EssayEditor() {
               }}
               className={styles.textArea}
               name="essay"
-              placeholder="Begin by writing your essay here or copy and pasting your essay here."
+              placeholder="Begin by writing or pasting your essay here."
               id=""
             ></textarea>
           </form>

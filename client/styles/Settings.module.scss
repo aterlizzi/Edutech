@@ -546,14 +546,14 @@
             }
           }
           .status {
-            margin: 0em;
+            margin: 0em 0em 1em 0em;
+            &:last-child {
+              margin: 0em;
+            }
             .special {
               margin: 0;
               color: $clr-secondary;
             }
-          }
-          .upApp {
-            margin: 0em 0em 1em 0em;
           }
         }
         .personalForm {

@@ -323,9 +323,11 @@ function Pricing() {
                     </button>
                   )
                 ) : (
-                  <button onClick={handleIvyClick} className={styles.btn}>
-                    Level Up
-                  </button>
+                  <div className={styles.btnContainer}>
+                    <button onClick={handleIvyClick} className={styles.btn}>
+                      Level Up
+                    </button>
+                  </div>
                 )
               ) : null}
             </div>
