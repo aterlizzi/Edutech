@@ -4,7 +4,7 @@
 
 .main {
   display: grid;
-  grid-template-columns: 1fr 7fr 5fr 3fr;
+  grid-template-columns: 1fr 7fr 5fr 1.75fr;
   font-family: "Inter", sans-serif;
   color: $clr-highEmpha;
   min-height: 100vh;
@@ -65,6 +65,7 @@
   }
   .writing {
     position: relative;
+    overflow-x: hidden;
     .textContainer {
       margin-bottom: 3em;
       .form {
@@ -130,6 +131,139 @@
       }
       .active {
         animation: preset 100ms linear 25ms forwards;
+      }
+    }
+  }
+  .info {
+    padding: 2em;
+    .header {
+      margin-top: 2em;
+      padding-bottom: 1em;
+      border-bottom: 1px solid $clr-bg4;
+      .title {
+        margin: 0;
+        font-weight: 400;
+        letter-spacing: 2px;
+      }
+    }
+    .desc {
+      font-size: 0.85em;
+      color: $clr-medEmpha;
+    }
+  }
+  .editor {
+    padding: 1em;
+    background: $clr-bg1;
+    display: flex;
+    flex-direction: column;
+    .edHead {
+      border-bottom: 1px solid $clr-bg4;
+      padding-bottom: 1.5em;
+      .title {
+        margin: 0;
+        text-transform: uppercase;
+        font-size: 0.85em;
+        font-weight: 400;
+        letter-spacing: 1.5px;
+      }
+    }
+    .performance {
+      border-bottom: 1px solid $clr-bg4;
+      .ratingContainer {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        margin: 1em 0em 1em 0em;
+        padding-left: 0.5em;
+        border-radius: 0.5em;
+        &:hover {
+          background: $clr-bg2;
+        }
+        .ratingText {
+          margin: 0em 1em 0em 0em;
+          text-transform: uppercase;
+          font-size: 0.5em;
+          font-weight: 400;
+          letter-spacing: 1.5px;
+        }
+        .ratingCircle {
+          background: $clr-bg;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 50%;
+          width: 30px;
+          height: 30px;
+          border: 1px solid rgba($clr-primaryRGB, 0.25);
+          margin-left: auto;
+          .rating {
+            font-size: 0.85em;
+            color: $clr-primary;
+          }
+        }
+      }
+    }
+    .topics {
+      border-bottom: 1px solid $clr-bg4;
+      padding: 1em 0em 1em 0em;
+      .topicContainer {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        margin: 1em 0em 1em 0em;
+        padding-left: 0.5em;
+        border-radius: 0.5em;
+        &:hover {
+          background: $clr-bg2;
+        }
+        .topicText {
+          margin: 0em 1em 0em 0em;
+          text-transform: uppercase;
+          font-size: 0.5em;
+          font-weight: 400;
+          letter-spacing: 1.5px;
+        }
+        .topicCircle {
+          background: $clr-bg;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 50%;
+          width: 30px;
+          height: 30px;
+          border: 1px solid rgba($clr-primaryRGB, 0.25);
+          margin-left: auto;
+          .topic {
+            font-size: 0.85em;
+            color: $clr-primary;
+          }
+        }
+      }
+    }
+    .utilities {
+      margin-top: auto;
+      margin-bottom: 1em;
+      .utilContainer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-left: 0.5em;
+        border-radius: 0.5em;
+        padding: 0.5em 0em 0.5em 0.5em;
+        cursor: pointer;
+        &:hover {
+          background: $clr-bg2;
+        }
+        .util {
+          margin: 0em 1em 0em 0em;
+          text-transform: uppercase;
+          font-size: 0.5em;
+          font-weight: 400;
+          letter-spacing: 1.5px;
+        }
+        .icon {
+          color: $clr-primary;
+        }
       }
     }
   }

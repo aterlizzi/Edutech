@@ -1,3 +1,4 @@
+import { Essay } from "./entity/Essay";
 import { College } from "./entity/College";
 import { Application } from "./entity/Application";
 import "reflect-metadata";
@@ -36,7 +37,7 @@ const main = async () => {
     username: "admin",
     password: "admin",
     database: "collegeapp",
-    entities: [UserData, Application, College, Ideas, SavedIdeas],
+    entities: [UserData, Application, College, Ideas, SavedIdeas, Essay],
     synchronize: true,
     logging: process.env.NODE_ENV !== "production",
   });
@@ -98,7 +99,7 @@ const main = async () => {
           if (!userId) break;
           const user = await UserData.findOne({
             where: { id: userId },
-            relations: ["referrer", "referred"],
+            relations: ["referrer", "referred", "presets"],
           });
           if (!user) break;
           if (event.data.object.metadata) {
@@ -120,6 +121,13 @@ const main = async () => {
               }
               await friend.save();
             }
+          }
+          const preset = user.presets;
+          if (!preset) {
+            const newPreset = Essay.create({
+              user,
+            });
+            user.presets = newPreset;
           }
           user.redeemedReferralCoupon = true;
           user.referredCode = "";

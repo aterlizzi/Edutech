@@ -15,7 +15,6 @@ import {
 import argon2 from "argon2";
 import { sendMail } from "../utils/sendEmail";
 import { createConfirmationUrl } from "../utils/createConfirmationUrl";
-import { sendAntiDupingMail } from "../utils/sendAntiDupingEmail";
 const { networkInterfaces } = require("os");
 const nets = networkInterfaces();
 const results = Object.create(null);
@@ -25,7 +24,7 @@ export class UsersResolver {
   @Query(() => [UserData])
   async findUsers(): Promise<UserData[] | undefined> {
     return await UserData.find({
-      relations: ["viewed", "referrer", "referred"],
+      relations: ["viewed", "referrer", "referred", "presets"],
     });
   }
   @Query(() => UserData, { nullable: true })

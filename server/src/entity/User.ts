@@ -1,3 +1,4 @@
+import { Essay } from "./Essay";
 import { SavedIdeas } from "./SavedIdeas";
 import { Application } from "./Application";
 import { Field, ID, Int, ObjectType } from "type-graphql";
@@ -6,10 +7,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   JoinTable,
   ManyToMany,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
@@ -118,6 +121,14 @@ export class UserData extends BaseEntity {
   @Field(() => Int)
   @Column({ default: 0 })
   totalIdeasRequested: number;
+
+  @Field(() => Essay, { nullable: true })
+  @OneToOne(() => Essay, (essay) => essay.user, {
+    cascade: true,
+    nullable: true,
+  })
+  @JoinColumn()
+  presets: Essay;
 
   @Column("bool", { default: false })
   hasUploaded: boolean;
