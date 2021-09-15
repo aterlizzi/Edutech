@@ -15,23 +15,38 @@ import React, { useEffect, useState } from "react";
 import Layout from "../../../components/layout";
 import styles from "../../../styles/Editor.module.scss";
 import autosize from "autosize";
-import { useQuery } from "urql";
+import { useMutation, useQuery } from "urql";
 import { useRouter } from "next/router";
 
 const Me = `
   query {
     me {
       tier
+      presets {
+        presetOne
+        presetTwo
+        presetThree
+        presetFour
+      }
     }
   }
 `;
+const Save = `
+  mutation($content: String!, $preset: Float!) {
+    savePreset(content: $content, preset: $preset)
+  }
+`;
+
+let typingTimer;
+
+const presetArr = [1, 2, 3, 4];
 
 function EssayEditor() {
   const router = useRouter();
   const [presetDisplay, setPresetDisplay] = useState(false);
   const [wordCount, setWordCount] = useState(0);
   const [essay, setEssay] = useState("");
-  const [preset, setPreset] = useState("Preset 1");
+  const [preset, setPreset] = useState(1);
   const [performance, setPerformance] = useState(0);
   const [grammar, setGrammar] = useState(0);
   const [punc, setPunc] = useState(0);
@@ -41,23 +56,72 @@ function EssayEditor() {
   const [pers, setPers] = useState(0);
   const [ent, setEnt] = useState(0);
   const [unique, setUnique] = useState(0);
+  const [initial, setInitial] = useState(0);
+  const [saving, setSaving] = useState(false);
 
   const [meResult, reexecuteMe] = useQuery({ query: Me });
   const { data, fetching, error } = meResult;
+  const [saveResult, saveEssay] = useMutation(Save);
+
+  if (data) {
+    if (data.me) {
+      if (initial === 0) {
+        switch (preset) {
+          case 1:
+            setEssay(data.me.presets.presetOne);
+            setWordCount(data.me.presets.presetOne.split(" ").length);
+            break;
+          case 2:
+            setEssay(data.me.presets.presetTwo);
+            setWordCount(data.me.presets.presetTwo.split(" ").length);
+            break;
+          case 3:
+            setEssay(data.me.presets.presetThree);
+            setWordCount(data.me.presets.presetThree.split(" ").length);
+            break;
+          case 4:
+            setEssay(data.me.presets.presetFour);
+            setWordCount(data.me.presets.presetFour.split(" ").length);
+            break;
+          default:
+            break;
+        }
+        setInitial(1);
+      }
+    }
+  }
 
   useEffect(() => {
     autosize(document.querySelector("textarea"));
   }, []);
-
+  useEffect(() => {
+    setInitial(0);
+  }, [preset]);
   useEffect(() => {
     if (data) {
       if (data.me) {
         if (data.me.tier === "Free") {
-          router.push("/user/dashboard");
+          router.push("/applications/pricing");
         }
       }
     }
   });
+
+  const handleSaveEssay = () => {
+    setSaving(true);
+    const variables = {
+      content: essay,
+      preset,
+    };
+    saveEssay(variables).then(() => setSaving(false));
+  };
+  const handleKeyUp = () => {
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(handleSaveEssay, 5000);
+  };
+  const handleKeyDn = () => {
+    clearTimeout(typingTimer);
+  };
 
   return (
     <main className={styles.main}>
@@ -69,7 +133,11 @@ function EssayEditor() {
           <div className={styles.iconCircle}>
             <FontAwesomeIcon icon={faPlus} className={styles.icon} />
           </div>
-          <FontAwesomeIcon icon={faSave} className={styles.icon} />
+          <FontAwesomeIcon
+            icon={faSave}
+            onClick={handleSaveEssay}
+            className={styles.icon}
+          />
           <FontAwesomeIcon icon={faDownload} className={styles.icon} />
         </div>
         <div className={styles.bottom}>
@@ -84,7 +152,7 @@ function EssayEditor() {
             onClick={() => setPresetDisplay(!presetDisplay)}
             className={styles.presetContainer}
           >
-            <p className={styles.preset}>{preset}</p>
+            <p className={styles.preset}>Preset {preset}</p>
             <FontAwesomeIcon
               icon={faChevronDown}
               className={
@@ -101,44 +169,55 @@ function EssayEditor() {
                 : `${styles.dropdn}`
             }
           >
-            <p
-              className={styles.selection}
-              onClick={() => {
-                if (preset === "Preset 1") {
-                  setPreset("Preset 2");
-                } else if (preset === "Preset 2") {
-                  setPreset("Preset 1");
-                }
-              }}
-            >
-              {preset !== "Preset 1" ? "Preset 1" : "Preset 2"}
-            </p>
-            <p className={styles.selection}>Preset 3</p>
-            <p className={styles.selection}>Preset 4</p>
+            {presetArr.map((number) => {
+              if (number !== preset) {
+                return (
+                  <p
+                    className={styles.selection}
+                    onClick={() => setPreset(number)}
+                  >
+                    Preset {number}
+                  </p>
+                );
+              }
+            })}
           </div>
         </header>
         <section className={styles.textContainer}>
           <form action="" className={styles.form}>
-            <textarea
-              onChange={(e) => {
-                if (e.currentTarget.value === "") {
-                  setWordCount(0);
-                  setEssay("");
-                } else {
-                  setWordCount(e.currentTarget.value.split(" ").length);
-                  setEssay(e.currentTarget.value);
-                }
-              }}
-              className={styles.textArea}
-              name="essay"
-              placeholder="Begin by writing or pasting your essay here."
-              id=""
-            ></textarea>
+            {data ? (
+              data.me ? (
+                <textarea
+                  onChange={(e) => {
+                    if (e.currentTarget.value === "") {
+                      setWordCount(0);
+                      setEssay("");
+                    } else {
+                      setWordCount(e.currentTarget.value.split(" ").length);
+                      setEssay(e.currentTarget.value);
+                    }
+                  }}
+                  className={styles.textArea}
+                  name="essay"
+                  placeholder="Begin by writing or pasting your essay here."
+                  id=""
+                  onKeyDown={handleKeyDn}
+                  onKeyUp={handleKeyUp}
+                  value={essay}
+                ></textarea>
+              ) : null
+            ) : null}
           </form>
         </section>
         <footer className={styles.writingFooter}>
           <p className={styles.words}>{wordCount} words</p>
         </footer>
+        {saving ? (
+          <div
+            className={`${styles.spinner} ${styles.spinnerTwo}`}
+            aria-hidden="true"
+          ></div>
+        ) : null}
       </section>
       <section className={styles.info}>
         <header className={styles.header}>

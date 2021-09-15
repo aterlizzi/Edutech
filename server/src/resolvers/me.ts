@@ -20,6 +20,7 @@ export class MeResolver {
         "savedIdeas",
         "referrer",
         "referred",
+        "presets",
       ],
     });
     if (!user) return undefined;
